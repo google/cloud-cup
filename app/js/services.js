@@ -20,6 +20,12 @@
       return function(roomId) {
         return fbutil.syncArray('room/' + roomId + '/players' , {endAt: null});
       };
+    }])
+
+    .factory('gameDataForRoom', ['fbutil', function(fbutil) {
+      return function(roomId) {
+        return fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
+      };
     }]);
 
 })();
