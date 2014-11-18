@@ -7,8 +7,8 @@ function randomInt(min, max) {
 }
 
 angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
-  .controller('StartCtrl', ['$scope', '$location', 'joinedPlayersList',
-      function($scope, $location, joinedPlayersList) {
+  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'joinedPlayersList',
+      function($scope, $location, fbutil, joinedPlayersList) {
     $scope.code = null;
 
     $scope.players = joinedPlayersList;
@@ -18,14 +18,18 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       $scope.players.$add({name: newPlayer});
     };
 
-    $scope.generate = function() {
-      $scope.code = 1234;
-    };
-
     $scope.start = function() {
       $location.path('/game');
       $location.search('code', $scope.code);
     };
+
+    $scope.init = function() {
+      $scope.code = randomInt(0, 1000);
+      var ref = fbutil.ref('rooms');
+      var obj = {}
+      obj[$scope.code] = true
+      ref.update(obj);
+    }
   }])
 
   .controller('GameCtrl', ['$scope', '$location', 'playersForRoom', 'gameDataForRoom',

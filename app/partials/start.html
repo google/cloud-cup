@@ -1,8 +1,7 @@
 <div class='startContainer'>
   <div>
     <p>Generate a code to start a new game</p>
-    <button ng-click="generate()" class="generateButton">Generate</button>
-    <div ng-show="code != null">
+    <div ng-show="code != null" data-ng-init="init()">
       <div class='gameCode'>{{code}}</div>
       <div>Once players has joined the game, click start</div>
       <button ng-click="start()" class="startButton">Start</button>
