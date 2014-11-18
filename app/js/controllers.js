@@ -7,22 +7,6 @@ function randomInt(min, max) {
 }
 
 angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
-  .controller('HomeCtrl', ['$scope', 'fbutil', 'user', 'FBURL', function($scope, fbutil, user, FBURL) {
-    $scope.syncedValue = fbutil.syncObject('syncedValue');
-    $scope.user = user;
-    $scope.FBURL = FBURL;
-
-    $scope.newRoom = function() {
-      var id = randomInt(0, 1000);
-      var ref = fbutil.ref('rooms');
-      // TODO: handle id collisions
-      var obj = {}
-      obj[id] = true
-      ref.update(obj);
-      $scope.roomId = id;
-    };
-  }])
-
   .controller('StartCtrl', ['$scope', '$location', 'joinedPlayersList',
       function($scope, $location, joinedPlayersList) {
     $scope.code = null;

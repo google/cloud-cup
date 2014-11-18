@@ -3,19 +3,6 @@
 angular.module('myApp.routes', ['ngRoute', 'simpleLogin'])
 
   .constant('ROUTES', {
-    '/home': {
-      templateUrl: 'partials/home.html',
-      controller: 'HomeCtrl',
-      resolve: {
-        // forces the page to wait for this promise to resolve before controller is loaded
-        // the controller can then inject `user` as a dependency. This could also be done
-        // in the controller, but this makes things cleaner (controller doesn't need to worry
-        // about auth status or timing of displaying its UI components)
-        user: ['simpleLogin', function(simpleLogin) {
-          return simpleLogin.getUser();
-        }]
-      }
-    },
     '/start': {
       templateUrl: 'partials/start.html',
       controller: 'StartCtrl'
@@ -81,7 +68,7 @@ angular.module('myApp.routes', ['ngRoute', 'simpleLogin'])
       }
     });
     // routes which are not in our map are redirected to /home
-    $routeProvider.otherwise({redirectTo: '/home'});
+    $routeProvider.otherwise({redirectTo: '/start'});
   }])
 
   /**
