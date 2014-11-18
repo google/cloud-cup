@@ -3,7 +3,7 @@ angular.module('myApp.games', [])
 .directive('buttonClickGame', function() {
   return {
     restrict: 'E',
-    templateUrl: '/app/partials/buttonClick.html',
+    templateUrl: 'partials/buttonClick.html',
     controller: function($scope) {
       $scope.maxTaps = 20;
       $scope.range = function(min, max) {
