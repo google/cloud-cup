@@ -26,7 +26,12 @@
       return function(roomId) {
         return fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
       };
+    }])
+
+    .factory('gameTypeForRoom', ['fbutil', function(fbutil) {
+      return function(roomId) {
+        return fbutil.syncObject('room/' + roomId + '/game/type' );
+      };
     }]);
 
 })();
-

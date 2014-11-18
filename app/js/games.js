@@ -1,9 +1,9 @@
 angular.module('myApp.games', [])
 
-.directive('buttonClickGame', function() {
+.directive('tapGame', function() {
   return {
     restrict: 'E',
-    templateUrl: 'partials/games/buttonClick.html',
+    templateUrl: 'partials/games/tap.html',
     controller: function($scope) {
       $scope.maxTaps = 20;
       $scope.range = function(min, max) {

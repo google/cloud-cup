@@ -1,11 +1,12 @@
 <div class="gameContainer">
   <div class="gamePanel">
-    <button-click-game ng-show="currentGame == 'BUTTON_CLICK'"></button-click-game>
-    <shake-game ng-show="currentGame == 'SHAKE'"></shake-game>
+    <tap-game ng-show="gameType.$value == 'tap'"></tap-game>
+    <shake-game ng-show="gameType.$value == 'shake'"></shake-game>
   </div>
 
   <div class="progressPanel">
     <p>Game {{code}} in progress!</p>
+    <p>type: {{gameType.$value}}</p>
     <table>
       <tr ng-repeat="player in players">
         <td>{{player.$value}}</td>
