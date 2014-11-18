@@ -1,0 +1,9 @@
+{
+  "firebase": "cloud-olympics",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
