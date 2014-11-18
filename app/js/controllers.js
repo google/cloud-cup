@@ -23,14 +23,16 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     };
   }])
 
-  .controller('StartCtrl', ['$scope', '$location', function($scope, $location) {
+  .controller('StartCtrl', ['$scope', '$location', 'joinedPlayersList',
+      function($scope, $location, joinedPlayersList) {
     $scope.code = null;
 
-    // TODO get players in real time
-    $scope.players = [
-      {name: 'Sarah'},
-      {name: 'Laurent'}
-    ];
+    $scope.players = joinedPlayersList;
+
+    // TODO remove this once players join from the phone
+    $scope.addPlayer = function(newPlayer) {
+      $scope.players.$add({name: newPlayer});
+    };
 
     $scope.generate = function() {
       $scope.code = 1234;
@@ -43,14 +45,14 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
   }])
 
   .controller('GameCtrl', ['$scope', '$location', function($scope, $location) {
-    $scope.code = $location.search()['code'];
+    $scope.code = $location.search().code;
 
     $scope.currentGame = 'BUTTON_CLICK';
 
     $scope.scores = [
       {name: 'Sarah', score: 2},
       {name: 'Laurent', score: 5},
-    ]
+    ];
   }])
 
   .controller('ChatCtrl', ['$scope', 'messageList', function($scope, messageList) {
