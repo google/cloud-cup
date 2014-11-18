@@ -33,13 +33,16 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
 
   }])
 
-  .controller('GameCtrl', ['$scope', '$location', 'playersForRoom', 'gameDataForRoom',
-      function($scope, $location, playersForRoom, gameDataForRoom) {
+  .controller('GameCtrl', function($scope, $location, gameRunner, playersForRoom, gameDataForRoom, gameTypeForRoom) {
     $scope.code = $location.search().code;
-    $scope.currentGame = 'BUTTON_CLICK';
     $scope.players = playersForRoom($scope.code);
     $scope.gameData = gameDataForRoom($scope.code);
-  }])
+    $scope.gameType = gameTypeForRoom($scope.code);
+
+    $scope.$watch('code', function() {
+      gameRunner.startNewGame($scope.code);
+    });
+  })
 
   .controller('ChatCtrl', ['$scope', 'messageList', function($scope, messageList) {
     $scope.messages = messageList;
