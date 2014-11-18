@@ -11,5 +11,9 @@
   <div>
     <h3>Current players</h3>
     <div ng-repeat="player in players">{{player.name}}</div>
+    <form>
+      <input placeholder="Name..." ng-model="newPlayer">
+      <button type="submit" ng-click="addPlayer(newPlayer);newPlayer = null;">add</button>
+    </form>
   </div>
 </div>

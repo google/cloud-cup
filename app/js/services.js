@@ -10,6 +10,10 @@
 
      .factory('messageList', ['fbutil', function(fbutil) {
        return fbutil.syncArray('messages', {limit: 10, endAt: null});
+     }])
+
+     .factory('joinedPlayersList', ['fbutil', function(fbutil) {
+       return fbutil.syncArray('joinedPlayers', {endAt: null});
      }]);
 
 })();
