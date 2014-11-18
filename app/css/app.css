@@ -1,70 +1,39 @@
 /* app css stylesheet */
 
-body {
-  margin: 10px;
+.page {
+  margin: 20px;
 }
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.startContainer {
+  display: flex;
 }
 
-.menu:before {
-  content: "[";
+.startContainer > div {
+  flex: 1;
 }
 
-.menu:after {
-  content: "]";
+.gameContainer {
+  display: flex;
 }
 
-.menu > li {
-  display: inline;
+.gameContainer > div {
+  flex: 1;
 }
 
-.menu > li.hide {
-   display: none;
+.gameCode {
+  padding: 20px;
+  background-color: rgb(206, 228, 225);
+  border: 2px solid rgb(140, 166, 163);
+  border-radius: 3px;
+  font-size: 24px;
+  display: inline-block;
+  margin: 20px 0;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+.generateButton {
+  display: block;
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
-}
-
-p.status {
-   color: red;
-}
-
-p.status.good, p.good {
-   color: green;
-}
-
-form label {
-   display: block;
-   margin: 15px 0;
-}
-
-form label span {
-   display: block;
-   font-weight: bold;
-}
-
-.error {
-   color: red;
-}
-
-fieldset {
-   float: left;
-   margin-right: 25px;
-   padding: 25px;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-    display: none !important;
+.startButton {
+  display: block;
 }

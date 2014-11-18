@@ -1,0 +1,8 @@
+<div>
+  <p>First to tap 20 times wins</p>
+  <table>
+    <tr ng-repeat="player in progress">
+      <td>{{player.name}}</td>
+      <td><span ng-repeat="n in range(0, player.taps)">x</span></td>
+    </tr>
+</div>

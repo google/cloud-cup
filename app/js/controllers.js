@@ -9,6 +9,36 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     $scope.FBURL = FBURL;
   }])
 
+  .controller('StartCtrl', ['$scope', '$location', function($scope, $location) {
+    $scope.code = null;
+
+    // TODO get players in real time
+    $scope.players = [
+      {name: 'Sarah'},
+      {name: 'Laurent'}
+    ];
+
+    $scope.generate = function() {
+      $scope.code = 1234;
+    };
+
+    $scope.start = function() {
+      $location.path('/game');
+      $location.search('code', $scope.code);
+    };
+  }])
+
+  .controller('GameCtrl', ['$scope', '$location', function($scope, $location) {
+    $scope.code = $location.search()['code'];
+
+    $scope.currentGame = 'BUTTON_CLICK';
+
+    $scope.scores = [
+      {name: 'Sarah', score: 2},
+      {name: 'Laurent', score: 5},
+    ]
+  }])
+
   .controller('ChatCtrl', ['$scope', 'messageList', function($scope, messageList) {
     $scope.messages = messageList;
     $scope.addMessage = function(newMessage) {

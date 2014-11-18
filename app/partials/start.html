@@ -1,0 +1,15 @@
+<div class='startContainer'>
+  <div>
+    <p>Generate a code to start a new game</p>
+    <button ng-click="generate()" class="generateButton">Generate</button>
+    <div ng-show="code != null">
+      <div class='gameCode'>{{code}}</div>
+      <div>Once players has joined the game, click start</div>
+      <button ng-click="start()" class="startButton">Start</button>
+    </div>
+  </div>
+  <div>
+    <h3>Current players</h3>
+    <div ng-repeat="player in players">{{player.name}}</div>
+  </div>
+</div>

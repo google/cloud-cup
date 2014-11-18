@@ -6,6 +6,7 @@ angular.module('myApp', [
     'myApp.controllers',
     'myApp.decorators',
     'myApp.directives',
+    'myApp.games',
     'myApp.filters',
     'myApp.routes',
     'myApp.services'
