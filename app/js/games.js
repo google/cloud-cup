@@ -3,7 +3,7 @@ angular.module('myApp.games', [])
 .directive('buttonClickGame', function() {
   return {
     restrict: 'E',
-    templateUrl: 'partials/buttonClick.html',
+    templateUrl: 'partials/games/buttonClick.html',
     controller: function($scope) {
       $scope.maxTaps = 20;
       $scope.range = function(min, max) {
@@ -14,5 +14,12 @@ angular.module('myApp.games', [])
         return input;
       };
     }
+  };
+})
+
+.directive('shakeGame', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/shake.html'
   };
 });
