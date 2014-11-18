@@ -12,10 +12,6 @@
       return fbutil.syncArray('messages', {limit: 10, endAt: null});
     }])
 
-    .factory('joinedPlayersList', ['fbutil', function(fbutil) {
-      return fbutil.syncArray('joinedPlayers', {endAt: null});
-    }])
-
     .factory('playersForRoom', ['fbutil', function(fbutil) {
       return function(roomId) {
         return fbutil.syncArray('room/' + roomId + '/players' , {endAt: null});
@@ -29,4 +25,3 @@
     }]);
 
 })();
-

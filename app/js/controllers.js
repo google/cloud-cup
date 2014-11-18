@@ -7,29 +7,30 @@ function randomInt(min, max) {
 }
 
 angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
-  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'joinedPlayersList',
-      function($scope, $location, fbutil, joinedPlayersList) {
+  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersForRoom',
+      function($scope, $location, fbutil, playersForRoom) {
     $scope.code = null;
-
-    $scope.players = joinedPlayersList;
-
-    // TODO remove this once players join from the phone
-    $scope.addPlayer = function(newPlayer) {
-      $scope.players.$add({name: newPlayer});
-    };
 
     $scope.start = function() {
       $location.path('/game');
       $location.search('code', $scope.code);
     };
 
+    // Just for testing when we have no phone
+    $scope.addDummyPlayers = function() {
+      fbutil.ref('room/' + $scope.code + '/players/1').update({'name': 'laurent'});
+      fbutil.ref('room/' + $scope.code + '/players/2').update({'name': 'sarah'});
+    }
+
     $scope.init = function() {
       $scope.code = randomInt(0, 1000);
-      var ref = fbutil.ref('rooms');
       var obj = {}
       obj[$scope.code] = true
-      ref.update(obj);
-    }
+      // TODO: handle conflicts
+      fbutil.ref('rooms').update(obj);
+      $scope.players = playersForRoom($scope.code);
+    };
+
   }])
 
   .controller('GameCtrl', ['$scope', '$location', 'playersForRoom', 'gameDataForRoom',
