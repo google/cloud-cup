@@ -1,5 +1,6 @@
 <div class="gameContainer">
   <div class="gamePanel">
+    <waiting-screen ng-show="gameMetadata.type == ''"></waiting-screen>
     <tap-game ng-show="gameMetadata.type == 'tap'"></tap-game>
     <shake-game ng-show="gameMetadata.type == 'shake'"></shake-game>
   </div>

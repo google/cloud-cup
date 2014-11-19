@@ -55,7 +55,7 @@ angular.module('myApp.controllers', ['firebase.utils'])
 
   }])
 
-  .controller('GameCtrl', function($scope, $location, gameRunner, playersService, gameDataService, gameMetadataForRoom) {
+  .controller('GameCtrl', function($scope, $location, $timeout, gameRunner, playersService, gameDataService, gameMetadataForRoom) {
     $scope.code = $location.search().code;
     $scope.players = playersService.asArray($scope.code);
     $scope.gameData = gameDataService.forRoom($scope.code);
@@ -95,6 +95,16 @@ angular.module('myApp.controllers', ['firebase.utils'])
       this.startGame(newGame);
     };
 
+    this.waitingScreen = function() {
+      this.gameMetadata.type = '';
+      this.gameMetadata.$save();
+
+      var self = this;
+      $timeout(function() {
+        self.switchGame();
+      }, 3000);
+    }
+
     this.startGame = function(gameType) {
       if (!this.startFunctions[gameType]) {
         throw new Error(gameType + ' is not a valid game type');
@@ -102,7 +112,7 @@ angular.module('myApp.controllers', ['firebase.utils'])
       this.startFunctions[gameType](this.currentRoom).then(function(winners) {
         // update score
         gameRunner.incrementWinnerScores(winners);
-        this.switchGame();
+        this.waitingScreen();
       }.bind(this));
     };
 

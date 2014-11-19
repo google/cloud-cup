@@ -2,8 +2,7 @@
   <h2>Tap your phone!</h2>
   <table>
     <tr ng-repeat="player in players">
-      <td><b>{{player.name}} {{gameData.players[player.$id]}}</b></td>
-      <td>{{gameData.players[player.$id]||0}}</td>
+      <td><b>{{player.name}}</b></td>
       <td>
         <img ng-src="{{player.imageUrl}}" class="face"
              style="margin-left: {{(gameData.players[player.$id]||0)*20}}px;

@@ -1,5 +1,12 @@
 angular.module('myApp.games', [])
 
+.directive('waitingScreen', function($q, $timeout) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/waiting.html',
+  };
+})
+
 // tap
 .directive('tapGame', function($q) {
   return {
