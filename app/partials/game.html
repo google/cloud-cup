@@ -7,7 +7,7 @@
   <div class="progressPanel">
 
     <h3>Scores</h3>
-    <div ng-repeat="player in players" class="player">
+    <div ng-repeat="player in players | orderBy:'score || 0'" class="player">
       <b>{{player.score || 0}}</b><br>
       <img ng-src="{{player.imageUrl}}" class="face"/><br>
       <b>{{player.name}}</b><br>

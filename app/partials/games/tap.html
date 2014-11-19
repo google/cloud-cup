@@ -3,11 +3,12 @@
   <table>
     <tr ng-repeat="player in players">
       <td><b>{{player.name}} {{gameData.players[player.$id]}}</b></td>
+      <td>{{gameData.players[player.$id]||0}}</td>
       <td>
         <img ng-src="{{player.imageUrl}}" class="face"
-             style="margin-left: {{gameData.players[player.$id]*10}}px;
-                    transform: rotate({{gameData.players[player.$id]*10}}deg);
-                    transition: all 0.2s;"/>
+             style="margin-left: {{(gameData.players[player.$id]||0)*20}}px;
+                    transform: rotate({{gameData.players[player.$id]*15}}deg);
+                    transition: all 0.5s;"/>
       </td>
     </tr>
   </table>
