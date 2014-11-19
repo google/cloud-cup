@@ -20,12 +20,12 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     $scope.addDummyPlayers = function() {
       fbutil.ref('room/' + $scope.code + '/players/1').update({'name': 'laurent'});
       fbutil.ref('room/' + $scope.code + '/players/2').update({'name': 'sarah'});
-    }
+    };
 
     $scope.init = function() {
       $scope.code = randomInt(0, 1000);
-      var obj = {}
-      obj[$scope.code] = true
+      var obj = {};
+      obj[$scope.code] = true;
       // TODO: handle conflicts
       fbutil.ref('rooms').update(obj);
       $scope.players = playersForRoom($scope.code);
@@ -126,7 +126,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
               $scope.msg = 'Password changed';
             }, function(err) {
               $scope.err = err;
-            })
+            });
         }
       };
 
