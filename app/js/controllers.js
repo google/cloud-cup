@@ -33,11 +33,11 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
 
   }])
 
-  .controller('GameCtrl', function($scope, $location, gameRunner, playersForRoom, gameDataForRoom, gameTypeForRoom) {
+  .controller('GameCtrl', function($scope, $location, gameRunner, playersForRoom, gameDataForRoom, gameMetadataForRoom) {
     $scope.code = $location.search().code;
     $scope.players = playersForRoom($scope.code);
     $scope.gameData = gameDataForRoom($scope.code);
-    $scope.gameType = gameTypeForRoom($scope.code);
+    $scope.gameType = gameMetadataForRoom($scope.code).type;
 
     $scope.$watch('code', function() {
       gameRunner.startNewGame($scope.code);

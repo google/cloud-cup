@@ -13,38 +13,37 @@
       return fbutil.syncArray('joinedPlayers', {endAt: null});
     }])
 
-    .service('gameRunner', function($timeout, gameTypeForRoom, gameNumberForRoom) {
+    .service('gameRunner', function($timeout, gameMetadataForRoom) {
       this.GAMES = ["tap", "shake"];
       this.MAX_GAMES = 5;
       this.GAME_LENGTH = 5000; // 10 seconds
 
       this.startNewGame = function(roomId) {
         this.gameIndex = 0;
-        this.gameType = gameTypeForRoom(roomId);
-        this.gameNumber = gameNumberForRoom(roomId);
+        this.gameMetadata = gameMetadataForRoom(roomId);
         this.setGameNumber(0);
         this.switchGame();
       };
 
       this.switchGame = function() {
-        if (this.gameNumber.$value == this.MAX_GAMES) {
+        if (this.gameMetadata.number == this.MAX_GAMES) {
           // TODO Show game over screen with final scores
           console.log('game over');
           return;
         }
         // TODO update the scores when we switch the game
-        this.setGameNumber((this.gameNumber.$value || 0) + 1);
+        this.setGameNumber((this.gameMetadata.number || 0) + 1);
         var newGame = Math.floor((Math.random() * this.GAMES.length));
-        this.gameType.$value = this.GAMES[newGame];
-        this.gameType.$save();
+        this.gameMetadata.type = this.GAMES[newGame];
+        this.gameMetadata.$save();
 
-        console.log('game ' + this.gameNumber.$value + ' is ' + this.GAMES[newGame]);
+        console.log('game ' + this.gameMetadata.number + ' is ' + this.GAMES[newGame]);
         $timeout(this.switchGame.bind(this), this.GAME_LENGTH);
       };
 
       this.setGameNumber = function(gameNumber) {
-        this.gameNumber.$value = gameNumber;
-        this.gameNumber.$save();
+        this.gameMetadata.number = gameNumber;
+        this.gameMetadata.$save();
       };
     })
 
@@ -60,15 +59,9 @@
       };
     }])
 
-    .factory('gameTypeForRoom', ['fbutil', function(fbutil) {
+    .factory('gameMetadataForRoom', ['fbutil', function(fbutil) {
       return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/type' );
-      };
-    }])
-
-    .factory('gameNumberForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/number' );
+        return fbutil.syncObject('room/' + roomId + '/game' );
       };
     }]);
 
