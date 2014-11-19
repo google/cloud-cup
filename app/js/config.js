@@ -7,9 +7,6 @@ angular.module('myApp.config', [])
   // see tags for other versions: https://github.com/firebase/angularFire-seed/tags
   .constant('version', '0.8.2')
 
-  // where to redirect users if they need to authenticate (see routeSecurity.js)
-  .constant('loginRedirectPath', '/login')
-
   // your Firebase data URL goes here, no trailing slash
   .constant('FBURL', 'https://cloud-olympics.firebaseio.com')
 
@@ -22,4 +19,3 @@ angular.module('myApp.config', [])
       }, 250);
     }
   }]);
-
