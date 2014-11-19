@@ -20,10 +20,7 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
     $scope.addDummyPlayers = function() {
       var p1 = {'name': 'Mirna',
                 'imageUrl': 'https://lh5.googleusercontent.com/-K0EoyJLIo4E/AAAAAAAAAAI/AAAAAAAADH0/-DOy9kRTn14/photo.jpg?sz=100'}
-      fbutil.ref('room/' + $scope.code + '/players/1').update(p1);
-      var p2 = {'name': 'Other Mirna',
-                'imageUrl': 'https://lh5.googleusercontent.com/-K0EoyJLIo4E/AAAAAAAAAAI/AAAAAAAADH0/-DOy9kRTn14/photo.jpg?sz=100'}
-      fbutil.ref('room/' + $scope.code + '/players/2').update(p2);
+      fbutil.ref('room/' + $scope.code + '/players').push(p1);
     }
 
     var findRoomId = function(n) {

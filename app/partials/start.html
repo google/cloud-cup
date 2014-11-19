@@ -5,6 +5,7 @@
       <div class='gameCode'>{{code}}</div>
       <div>Once players has joined the game, click start</div>
       <button ng-click="start()" class="startButton" ng-show="players.length > 1">Start</button>
+      <button ng-click="addDummyPlayers()">Add dummy players for testing</button>
     </div>
   </div>
 
@@ -15,7 +16,6 @@
     </div>
     <div ng-show="players.length == 0">
       No one has joined yet.
-      <button ng-click="addDummyPlayers()">Add dummy players for testing</button>
     </div>
   </div>
 
