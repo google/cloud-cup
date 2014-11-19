@@ -56,8 +56,60 @@ angular.module('myApp.controllers', ['firebase.utils'])
     $scope.players = playersForRoom($scope.code);
     $scope.gameData = gameDataForRoom($scope.code);
     $scope.gameMetadata = gameMetadataForRoom($scope.code);
+    $scope.gameCtrl = this;
 
-    $scope.$watch('code', function() {
-      gameRunner.startNewGame($scope.code);
-    });
+    // map of game ID to start function that returns a promise
+    // which resolves to a list of winners when the game is over
+    this.startFunctions = {};
+    this.games = [];
+    this.MAX_GAMES = 5;
+    this.GAME_LENGTH = 5000; // 10 seconds
+    this.currentRoom;
+
+    this.registerGame = function(gameId, startFunction) {
+      this.startFunctions[gameId] = startFunction;
+      // TODO separate list not necessary
+      this.games.push(gameId);
+    }
+
+    this.startNewGame = function(roomId) {
+      this.currentRoom = roomId;
+      this.gameMetadata = gameMetadataForRoom(roomId);
+      gameRunner.setGame(0, null);
+      this.switchGame();
+    };
+
+    this.switchGame = function() {
+      if (this.gameMetadata.number == this.MAX_GAMES) {
+        // TODO Show game over screen with final scores
+        console.log('game over');
+        return;
+      }
+
+      var newGame = this.games[Math.floor((Math.random() * this.games.length))];
+      gameRunner.setGame(gameRunner.getNextGameNumber(), newGame);
+      this.startGame(newGame);
+    };
+
+    this.startGame = function(gameType) {
+      if (!this.startFunctions[gameType]) {
+        throw new Error(gameType + ' is not a valid game type');
+      }
+      this.startFunctions[gameType](this.currentRoom).then(function(winners) {
+        // update score
+        gameRunner.incrementWinnerScores(winners);
+        this.switchGame();
+      }.bind(this));
+    };
+
+    $scope.$watch(function() {
+      // Watch for scope.code to change, but only start when there
+      // are registered games.
+      return $scope.code && this.games.length > 0;
+    }.bind(this), function() {
+      if (this.games.length > 0) {
+        gameRunner.setRoom($scope.code);
+        this.startNewGame($scope.code);
+      }
+    }.bind(this));
   });

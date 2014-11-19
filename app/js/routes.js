@@ -9,7 +9,8 @@ angular.module('myApp.routes', ['ngRoute'])
     },
     '/game': {
       templateUrl: 'partials/game.html',
-      controller: 'GameCtrl'
+      controller: 'GameCtrl',
+      controllerAs: 'ctrl'
     },
   })
 
