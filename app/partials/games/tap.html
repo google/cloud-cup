@@ -1,11 +1,12 @@
 <div>
-  <p>First to tap 20 times wins</p>
+  <h2>Tap your phone!</h2>
   <table>
-    <table>
-      <tr ng-repeat="player in players">
-        <td>{{player.name}}</td>
-        <td>{{gameData.players[player.$id]}}</td>
-        <td><span ng-repeat="n in range(0, gameData.players[player.$id])">x</span></td>
-      </tr>
-    </table>
+    <tr ng-repeat="player in players">
+      <td><b>{{player.name}} {{gameData.players[player.$id]}}</b></td>
+      <td>
+        <img ng-src="{{player.imageUrl}}" class="face"
+             style="margin-left: {{gameData.players[player.$id]*10}}px; transform: rotate({{gameData.players[player.$id]*10}}deg)"/>
+      </td>
+    </tr>
+  </table>
 </div>
