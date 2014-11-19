@@ -24,9 +24,6 @@
           this.players[player.$id].score = score;
         }.bind(this));
         this.players.$save();
-
-        console.log(winners);
-        // TODO
       };
 
       this.setGame = function(gameNumber, gameType) {
@@ -54,20 +51,6 @@
         return fbutil.syncObject('room/' + roomId + '/players' , {endAt: null});
       };
     })
-
-    // TODO Use the playersService instead
-    .factory('playersForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncArray('room/' + roomId + '/players' , {endAt: null});
-      };
-    }])
-
-    // TODO use gameDataService instead
-    .factory('gameDataForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
-      };
-    }])
 
     .service('gameDataService', function(fbutil) {
       this.forRoom = function(roomId) {

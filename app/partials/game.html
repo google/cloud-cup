@@ -10,7 +10,7 @@
     <table>
       <tr ng-repeat="player in players">
         <td>{{player.name}}</td>
-        <td>{{player.score}}</td>
+        <td>{{player.score || 0}}</td>
       </tr>
     </table>
   </div>

@@ -1,7 +1,7 @@
 angular.module('myApp.games', [])
 
 // tap
-.directive('tapGame', function($q, $timeout, gameDataForRoom, playersForRoom) {
+.directive('tapGame', function($q) {
   return {
     restrict: 'E',
     templateUrl: 'partials/games/tap.html',

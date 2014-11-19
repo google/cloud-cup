@@ -7,8 +7,8 @@ function randomInt(min, max) {
 }
 
 angular.module('myApp.controllers', ['firebase.utils'])
-  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersForRoom',
-      function($scope, $location, fbutil, playersForRoom) {
+  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersService',
+      function($scope, $location, fbutil, playersService) {
     $scope.code = null;
 
     $scope.start = function() {
@@ -32,15 +32,15 @@ angular.module('myApp.controllers', ['firebase.utils'])
         if (snap.val() != null) {
           findRoomId(n * 2);
           return;
-        };
+        }
 
         // Register the room.
         // TODO: There could be a race condition though.
-        var obj = {}
-        obj[roomId] = true
+        var obj = {};
+        obj[roomId] = true;
         fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
         fbutil.ref('rooms').update(obj);
-        $scope.players = playersForRoom(roomId);
+        $scope.players = playersService.asArray(roomId);
         $scope.code = roomId;
       });
     };
@@ -51,10 +51,10 @@ angular.module('myApp.controllers', ['firebase.utils'])
 
   }])
 
-  .controller('GameCtrl', function($scope, $location, gameRunner, playersForRoom, gameDataForRoom, gameMetadataForRoom) {
+  .controller('GameCtrl', function($scope, $location, gameRunner, playersService, gameDataService, gameMetadataForRoom) {
     $scope.code = $location.search().code;
-    $scope.players = playersForRoom($scope.code);
-    $scope.gameData = gameDataForRoom($scope.code);
+    $scope.players = playersService.asArray($scope.code);
+    $scope.gameData = gameDataService.forRoom($scope.code);
     $scope.gameMetadata = gameMetadataForRoom($scope.code);
     $scope.gameCtrl = this;
 
@@ -70,7 +70,7 @@ angular.module('myApp.controllers', ['firebase.utils'])
       this.startFunctions[gameId] = startFunction;
       // TODO separate list not necessary
       this.games.push(gameId);
-    }
+    };
 
     this.startNewGame = function(roomId) {
       this.currentRoom = roomId;
