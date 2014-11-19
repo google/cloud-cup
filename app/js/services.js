@@ -52,6 +52,7 @@
       };
     })
 
+    // Service for getting game data (current player progress)
     .service('gameDataService', function(fbutil) {
       this.forRoom = function(roomId) {
         return fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
@@ -60,21 +61,10 @@
       this.clearData = function(roomId) {
         var ref = fbutil.ref('room/' + roomId + '/game/data');
         ref.remove();
-      }
+      };
     })
 
-    .factory('gameTypeForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/type' );
-      };
-    }])
-
-    .factory('gameNumberForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/number' );
-      };
-    }])
-
+    // Service for getting game metadata (type and number)
     .factory('gameMetadataForRoom', ['fbutil', function(fbutil) {
       return function(roomId) {
         return fbutil.syncObject('room/' + roomId + '/game' );
