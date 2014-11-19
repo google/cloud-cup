@@ -1,7 +1,7 @@
 <div class="gameContainer">
   <div class="gamePanel">
-    <tap-game ng-show="gameType.$value == 'tap'"></tap-game>
-    <shake-game ng-show="gameType.$value == 'shake'"></shake-game>
+    <tap-game ng-show="gameMetadata.type == 'tap'"></tap-game>
+    <shake-game ng-show="gameMetadata.type == 'shake'"></shake-game>
   </div>
 
   <div class="progressPanel">
