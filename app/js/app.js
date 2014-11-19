@@ -11,8 +11,3 @@ angular.module('myApp', [
     'myApp.routes',
     'myApp.services'
   ])
-
-  .run(['simpleLogin', function(simpleLogin) {
-    console.log('run'); //debug
-    simpleLogin.getUser();
-  }])

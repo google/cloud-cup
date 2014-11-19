@@ -6,7 +6,7 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
+angular.module('myApp.controllers', ['firebase.utils'])
   .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersForRoom',
       function($scope, $location, fbutil, playersForRoom) {
     $scope.code = null;
