@@ -5,7 +5,9 @@
       <td><b>{{player.name}} {{gameData.players[player.$id]}}</b></td>
       <td>
         <img ng-src="{{player.imageUrl}}" class="face"
-             style="margin-left: {{gameData.players[player.$id]*10}}px; transform: rotate({{gameData.players[player.$id]*10}}deg)"/>
+             style="margin-left: {{gameData.players[player.$id]*10}}px;
+                    transform: rotate({{gameData.players[player.$id]*10}}deg);
+                    transition: all 0.2s;"/>
       </td>
     </tr>
   </table>

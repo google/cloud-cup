@@ -40,6 +40,10 @@ angular.module('myApp.controllers', ['firebase.utils'])
         obj[roomId] = true;
         fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
         fbutil.ref('rooms').update(obj);
+        var game = {};
+        game.number = -1;
+        game.type = '';
+        fbutil.ref('room/' + roomId + '/game').set(game); // make sure the state is clean
         $scope.players = playersService.asArray(roomId);
         $scope.code = roomId;
       });

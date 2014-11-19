@@ -3,7 +3,8 @@
     <p>Enter this code on the phones to join the game.</p>
     <div ng-show="code != null" data-ng-init="init()">
       <div class='gameCode'>{{code}}</div>
-      <div>Once players has joined the game, click start</div>
+      <div ng-show="players.length == 0">No one has joined yet.</div>
+      <div ng-show="players.length == 1">Need at least one other player.</div>
       <button ng-click="start()" class="startButton" ng-show="players.length > 1">Start</button>
       <button ng-click="addDummyPlayers()">Add dummy players for testing</button>
     </div>
@@ -13,9 +14,6 @@
     <div ng-repeat="player in players" class="player">
       <img ng-src="{{player.imageUrl}}" class="face"/><br>
       <b>{{player.name}}</b>
-    </div>
-    <div ng-show="players.length == 0">
-      No one has joined yet.
     </div>
   </div>
 

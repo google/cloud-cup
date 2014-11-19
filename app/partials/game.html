@@ -5,13 +5,13 @@
   </div>
 
   <div class="progressPanel">
-    <p>Game {{code}} in progress!</p>
-    <p>type: {{gameMetadata.type}}</p>
-    <table>
-      <tr ng-repeat="player in players">
-        <td>{{player.name}}</td>
-        <td>{{player.score || 0}}</td>
-      </tr>
-    </table>
+
+    <h3>Scores</h3>
+    <div ng-repeat="player in players" class="player">
+      <b>{{player.score || 0}}</b><br>
+      <img ng-src="{{player.imageUrl}}" class="face"/><br>
+      <b>{{player.name}}</b><br>
+    </div>
+
   </div>
 </div>
