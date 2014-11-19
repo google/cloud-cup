@@ -26,13 +26,30 @@ angular.module('myApp.controllers', ['firebase.utils', 'simpleLogin'])
       fbutil.ref('room/' + $scope.code + '/players/2').update(p2);
     }
 
+    var findRoomId = function(n) {
+      // Each time we don't find a room, we multiply the range by 2.
+      var roomId = randomInt(0, 100 * n);
+
+      // Check if the random id is available
+      fbutil.ref('rooms/' + roomId).once('value', function(snap) {
+        if (snap.val() != null) {
+          findRoomId(n * 2);
+          return;
+        };
+
+        // Register the room.
+        // TODO: There could be a race condition though.
+        var obj = {}
+        obj[roomId] = true
+        fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
+        fbutil.ref('rooms').update(obj);
+        $scope.players = playersForRoom(roomId);
+        $scope.code = roomId;
+      });
+    };
+
     $scope.init = function() {
-      $scope.code = randomInt(0, 1000);
-      var obj = {};
-      obj[$scope.code] = true;
-      // TODO: handle conflicts
-      fbutil.ref('rooms').update(obj);
-      $scope.players = playersForRoom($scope.code);
+      findRoomId(1);
     };
 
   }])
