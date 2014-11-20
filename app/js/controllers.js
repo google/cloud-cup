@@ -64,5 +64,4 @@ angular.module('myApp.controllers', ['firebase.utils'])
     gameDataService.setRoom($scope.code); // set the initial value before the watch is called
     $scope.players = playersService.asArray($scope.code);
     $scope.gameDataService = gameDataService;
-    $scope.gameData = gameDataService.getGameData();
   });

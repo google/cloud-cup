@@ -95,14 +95,12 @@
       // that score is greater than or equal to minToWin. If there
       // are no winners, return null.
       this.getHighWinners = function(gameData, players, minToWin) {
-        //var gameData = gameDataService.getGameData()[gameDataService.getNumber()];
-        if (!gameData || !gameData.players) {
+        if (!gameData) {
           return;
         }
-        var playerData = gameData.players;
         var highestScore = 0;
         players.forEach(function(player) {
-          var score = playerData[player.$id];
+          var score = gameData[player.$id];
           if (score >= highestScore) {
             highestScore = score;
           }
@@ -114,7 +112,7 @@
 
         var winners = [];
         players.forEach(function(player) {
-          if(playerData[player.$id] == highestScore) {
+          if(gameData[player.$id] == highestScore) {
             winners.push(player);
           }
         });
@@ -142,7 +140,6 @@
       this.setRoom = function(roomId) {
         this.currentRoom = roomId;
         this.players = playersService.asArray(roomId);
-        this.gameData = fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
         this.games = fbutil.syncObject('room/' + roomId + '/games' , {endAt: null});
         this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
       };
@@ -183,9 +180,9 @@
         return this.games[this.getNumber()].type;
       };
 
-      // Firebase object with game data
+      // Firebase object with game data for the current room and number
       this.getGameData = function() {
-        return this.gameData;
+        return fbutil.syncObject('room/' + this.currentRoom + '/games/' + this.getNumber() + '/data' , {endAt: null});
       };
 
       this.clearData = function() {
