@@ -17,6 +17,7 @@
       this.MAX_GAMES = 5;
       this.GAME_LENGTH = 5000; // 10 seconds
       this.currentRoom = null;
+      this.players = {};
 
       $rootScope.$watch(function() {
         // Watch for scope.code to change, but only start when there
@@ -37,13 +38,13 @@
       this.startNewGame = function(roomId) {
         this.currentRoom = roomId;
         this.players = playersService.asObject(roomId);
-        this.setGame(0, null);
+        gameDataService.setNumber(-1);
         this.waitingScreen();
       };
 
       this.switchGame = function() {
         var newGame = this.games[Math.floor((Math.random() * this.games.length))];
-        this.setGame(this.getNextGameNumber(), newGame);
+        gameDataService.startGame(newGame, this.players);
         this.startGame(newGame);
       };
 
@@ -69,8 +70,6 @@
       };
 
       this.waitingScreen = function() {
-        gameDataService.setType('');
-
         var self = this;
         var count = 30;
         var waitInterval = $interval(function() {
@@ -92,16 +91,6 @@
         this.players.$save();
       };
 
-      this.setGame = function(gameNumber, gameType) {
-        gameDataService.setNumber(gameNumber);
-        if (gameType) {
-          gameDataService.setType(gameType);
-        }
-        console.log('game ' + gameDataService.getNumber() + ' is ' + gameDataService.getType());
-
-        gameDataService.clearData();
-      };
-
       this.getNextGameNumber = function() {
         return (gameDataService.getNumber() || 0) + 1;
       };
@@ -110,6 +99,7 @@
       // that score is greater than or equal to minToWin. If there
       // are no winners, return null.
       this.getHighWinners = function(gameData, players, minToWin) {
+        //var gameData = gameDataService.getGameData()[gameDataService.getNumber()];
         if (!gameData || !gameData.players) {
           return;
         }
@@ -147,17 +137,40 @@
     })
 
     // Service for getting game data (current number, type, and player data)
-    .service('gameDataService', function($rootScope, fbutil) {
+    .service('gameDataService', function($rootScope, fbutil, playersService) {
       this.currentRoom = null;
       this.gameData = null;
       this.gameMetadata = null;
       this.currentRoom = null;
+      this.players = null;
 
       this.setRoom = function(roomId) {
         this.currentRoom = roomId;
+        this.players = playersService.asArray(roomId);
         this.gameData = fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
+        this.games = fbutil.syncObject('room/' + roomId + '/games' , {endAt: null});
         this.gameMetadata = fbutil.syncObject('room/' + roomId + '/game');
         this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
+      };
+
+      // Add a new game at the next number and update currentGame
+      this.startGame = function(type) {
+        var nextNumber = (this.getNumber() || 0) + 1;
+        this.setNumber(nextNumber);
+        var playerData = {};
+        this.players.forEach(function(player) {
+          playerData[player.$id] = 0;
+        });
+
+        this.games[nextNumber.toString()] = {
+          type: type,
+          data: playerData
+        };
+        this.games.$save();
+
+        // TODO remove this
+        this.setType(type);
+        console.log('game ' + this.getNumber() + ' is ' + this.getType());
       };
 
       // number
@@ -174,14 +187,16 @@
         this.gameMetadata.$save();
       };
 
-      // string
-      this.getType = function() {
-        return this.gameMetadata.type;
-      };
-
+      // TODO remove
       this.setType = function(type) {
         this.gameMetadata.type = type;
         this.gameMetadata.$save();
+      };
+
+      // string
+      this.getType = function() {
+        //return this.games[this.getNumber()].type;
+        return this.gameMetadata.type;
       };
 
       // Firebase object with game data
