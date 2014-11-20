@@ -64,9 +64,11 @@
       };
 
       this.waitingScreen = function(winners) {
+        gameDataService.setState(gameDataService.STATES.WAITING);
+        $rootScope.winners = winners;
+
         var self = this;
         var count = 60;
-        gameDataService.setState(gameDataService.STATES.WAITING);
         var waitInterval = $interval(function() {
           count = count - 1;
 
