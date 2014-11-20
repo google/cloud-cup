@@ -20,3 +20,14 @@
 .ranking tr:nth-child(odd) {
   background: #EEE;
 }
+
+.rankingPlayer.ng-move {
+  transition: all linear 1s;
+  max-height: 0px;
+  opacity: 0;
+}
+
+.rankingPlayer.ng-move.ng-move-active {
+  max-height: 40px;
+  opacity: 1;
+}
