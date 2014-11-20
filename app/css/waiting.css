@@ -1,7 +1,15 @@
-.loading {
+.waitingContainer .loading {
   transition:all linear 0.1s;
   margin: 0 auto;
   height: 5px;
+}
+
+.waitingContainer h2.ready {
+  text-align: center;
+}
+
+.waitingContainer .info {
+  height: 180px;
 }
 
 .winners-container {
@@ -18,6 +26,8 @@
 
 .ranking {
   width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ranking table, .ranking tr {

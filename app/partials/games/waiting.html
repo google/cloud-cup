@@ -1,29 +1,35 @@
-<div style="width: 100%; text-align: center">
+<div class="waitingContainer">
 
-  <div ng-show="!gameDataService.isDone() && countdown < 30">
-    <h2>Get ready!</h2>
+  <div class="info">
+    <div ng-show="!gameDataService.isDone() && countdown < 30">
+      <h2 class="ready">Get ready!</h2>
 
-    <div class="loading" style="background-color: rgb(255, {{countdown*10}}, 0);
-                                width: {{countdown*3}}%;">&nbsp;</div>
-  </div>
+      <div class="loading" style="background-color: rgb(255, {{countdown*10}}, 0);
+                                  width: {{countdown*3}}%;">&nbsp;</div>
+    </div>
 
-  <div ng-show="gameDataService.isDone() && countdown < 30">
-    <h2>End of game</h2>
-  </div>
+    <div ng-show="countdown >= 30 && winners.length == 0">
+      <h1>Starting game...</h1>
+    </div>
 
-  <div ng-show="countdown >= 30 && winners.length > 0">
-    <h2>Winners</h2>
-    <div class="winners-container">
-      <div class="winners-list">
-        <div ng-repeat="winner in winners" class="player-name-box">
-          <img ng-src="{{winner.imageUrl}}" class="face big"/>
-          <b>{{winner.name}}</b>
+    <div ng-show="gameDataService.isDone() && countdown < 30">
+      <h1>End of game</h1>
+    </div>
+
+    <div ng-show="countdown >= 30 && winners.length > 0">
+      <h2>Winners</h2>
+      <div class="winners-container">
+        <div class="winners-list">
+          <div ng-repeat="winner in winners" class="player-name-box">
+            <img ng-src="{{winner.imageUrl}}" class="face big"/>
+            <b>{{winner.name}}</b>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div align="center">
+  <div>
     <h2>Ranking</h2>
 
     <table class="ranking card">
