@@ -7,11 +7,11 @@
                                 width: {{countdown*3}}%;">&nbsp;</div>
   </div>
 
-  <div ng-show="gameDataService.isDone()">
+  <div ng-show="gameDataService.isDone() && countdown < 30">
     <h2>End of game</h2>
   </div>
 
-  <div ng-show="countdown > 30 && winners.length > 0">
+  <div ng-show="countdown >= 30 && winners.length > 0">
     <h2>Winners</h2>
     <div ng-repeat="winner in winners">
       <img ng-src="{{winner.imageUrl}}" class="face"/>

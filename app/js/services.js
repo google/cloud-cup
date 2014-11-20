@@ -11,7 +11,6 @@
       this.startFunctions = {};
       this.games = [];
       this.MAX_GAMES = 5;
-      this.GAME_LENGTH = 5000; // 10 seconds
       this.currentRoom = null;
       this.players = {};
 
@@ -39,6 +38,7 @@
       };
 
       this.switchGame = function() {
+        gameDataService.setState(gameDataService.STATES.PLAYING);
         var newGame = this.games[Math.floor((Math.random() * this.games.length))];
         gameDataService.startGame(newGame, this.players);
         this.startGame(newGame);
@@ -49,22 +49,19 @@
           throw new Error(gameType + ' is not a valid game type');
         }
         this.startFunctions[gameType](this.currentRoom).then(function(winners) {
-          if (gameDataService.getNumber() >= this.MAX_GAMES) {
-            this.endScreen();
-          } else {
-            this.waitingScreen(winners);
-          }
+          this.waitingScreen(winners);
         }.bind(this));
       };
 
-      this.endScreen = function() {
-        gameDataService.setState(gameDataService.STATES.DONE);
-        // TODO Show game over screen with final scores
-        console.log('game over');
-      };
-
       this.waitingScreen = function(winners) {
-        gameDataService.setState(gameDataService.STATES.WAITING);
+        var end;
+        if (gameDataService.getNumber() >= this.MAX_GAMES) {
+          gameDataService.setState(gameDataService.STATES.DONE);
+          end = true;
+        } else {
+          gameDataService.setState(gameDataService.STATES.WAITING);
+          end = false;
+        }
         $rootScope.winners = winners;
 
         var self = this;
@@ -77,8 +74,9 @@
             self.incrementWinnerScores(winners);
           }
           if (count <= 0) {
-            gameDataService.setState(gameDataService.STATES.PLAYING);
-            self.switchGame();
+            if (!end) {
+              self.switchGame();
+            }
             $interval.cancel(waitInterval);
           } else {
             $rootScope.countdown = count;

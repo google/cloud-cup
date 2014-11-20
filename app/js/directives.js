@@ -17,10 +17,3 @@ angular.module('myApp.directives', [])
       templateUrl: 'partials/games/waiting.html',
     };
   })
-
-  .directive('endScreen', function($q, $timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/games/end.html',
-    };
-  })

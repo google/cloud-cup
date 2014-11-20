@@ -1,6 +1,5 @@
 <div class="gameContainer">
   <div class="gamePanel">
-    <end-screen ng-show="gameDataService.isDone()"></end-screen>
     <waiting-screen ng-show="gameDataService.isWaiting() || gameDataService.isDone()"></waiting-screen>
     <div ng-show="gameDataService.isPlaying()">
       <tap-game ng-show="gameDataService.getType() == 'tap'"></tap-game>
