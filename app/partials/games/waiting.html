@@ -1,10 +1,14 @@
 <div style="width: 100%; text-align: center">
 
-  <div ng-show="countdown < 30">
+  <div ng-show="!gameDataService.isDone() && countdown < 30">
     <h2>Get ready!</h2>
 
     <div class="loading" style="background-color: rgb(255, {{countdown*10}}, 0);
                                 width: {{countdown*3}}%;">&nbsp;</div>
+  </div>
+
+  <div ng-show="gameDataService.isDone()">
+    <h2>End of game</h2>
   </div>
 
   <div align="center">

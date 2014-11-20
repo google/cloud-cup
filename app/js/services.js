@@ -35,7 +35,7 @@
         this.currentRoom = roomId;
         this.players = playersService.asObject(roomId);
         gameDataService.setNumber(-1);
-        this.waitingScreen();
+        this.waitingScreen([]);
       };
 
       this.switchGame = function() {
@@ -49,12 +49,10 @@
           throw new Error(gameType + ' is not a valid game type');
         }
         this.startFunctions[gameType](this.currentRoom).then(function(winners) {
-          // update score
-          this.incrementWinnerScores(winners);
-          if (gameDataService.getNumber() == this.MAX_GAMES) {
+          if (gameDataService.getNumber() >= this.MAX_GAMES) {
             this.endScreen();
           } else {
-            this.waitingScreen();
+            this.waitingScreen(winners);
           }
         }.bind(this));
       };
@@ -65,12 +63,17 @@
         console.log('game over');
       };
 
-      this.waitingScreen = function() {
+      this.waitingScreen = function(winners) {
         var self = this;
         var count = 60;
         gameDataService.setState(gameDataService.STATES.WAITING);
         var waitInterval = $interval(function() {
           count = count - 1;
+
+          if (count == 45) {
+            // update score
+            self.incrementWinnerScores(winners);
+          }
           if (count <= 0) {
             gameDataService.setState(gameDataService.STATES.PLAYING);
             self.switchGame();
