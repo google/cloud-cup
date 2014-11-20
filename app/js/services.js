@@ -68,9 +68,11 @@
       this.waitingScreen = function() {
         var self = this;
         var count = 30;
+        gameDataService.setWaiting(true);
         var waitInterval = $interval(function() {
           count = count - 1;
           if (count <= 0) {
+            gameDataService.setWaiting(false);
             self.switchGame();
             $interval.cancel(waitInterval);
           } else {
@@ -142,6 +144,7 @@
         this.players = playersService.asArray(roomId);
         this.games = fbutil.syncObject('room/' + roomId + '/games' , {endAt: null});
         this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
+        this.waiting = fbutil.syncObject('room/' + roomId + '/waiting');
       };
 
       // Add a new game at the next number and update currentGame
@@ -174,11 +177,20 @@
 
       // string
       this.getType = function() {
-        if (!this.games[this.getNumber()]) {
+        if (this.isWaiting() || !this.games[this.getNumber()]) {
           return '';
         }
         return this.games[this.getNumber()].type;
       };
+
+      this.isWaiting = function() {
+        return this.waiting.$value == true;
+      };
+
+      this.setWaiting = function(waiting) {
+        this.waiting.$value = waiting;
+        this.waiting.$save();
+      }
 
       // Firebase object with game data for the current room and number
       this.getGameData = function() {

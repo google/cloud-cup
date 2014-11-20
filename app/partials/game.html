@@ -1,6 +1,6 @@
 <div class="gameContainer">
   <div class="gamePanel">
-    <waiting-screen ng-show="gameDataService.getType() == ''"></waiting-screen>
+    <waiting-screen ng-show="gameDataService.isWaiting()"></waiting-screen>
     <end-screen ng-show="gameDataService.getType() == 'end'"></end-screen>
     <tap-game ng-show="gameDataService.getType() == 'tap'"></tap-game>
     <shake-game ng-show="gameDataService.getType() == 'shake'"></shake-game>
