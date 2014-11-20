@@ -66,6 +66,13 @@ angular.module('myApp.controllers', ['firebase.utils'])
 
   .controller('GameCtrl', function($scope, $location, $timeout, gameRunner, playersService, gameDataService) {
     $scope.code = $location.search().code;
+
+    // If our game data service is not populated, use the route parameter to repopulate it.
+    // This may happen when refreshing the browser on a room page.
+    if(!gameDataService.currentRoom) {
+      gameDataService.joinRoom($scope.code);
+    }
+
     $scope.players = playersService.asArray($scope.code);
     $scope.gameDataService = gameDataService;
   });
