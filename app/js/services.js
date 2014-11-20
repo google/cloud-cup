@@ -64,7 +64,6 @@
         }
         $rootScope.winners = winners;
 
-        var self = this;
         var count = 60;
         // Store the room so we don't update the wrong game.
         var room = this.currentRoom;
@@ -77,11 +76,11 @@
 
           if (count == 45) {
             // update score
-            self.incrementWinnerScores(winners);
+            this.incrementWinnerScores(winners);
           }
           if (count <= 0) {
             if (!end) {
-              self.switchGame();
+              this.switchGame();
             }
             $interval.cancel(waitInterval);
           } else {
