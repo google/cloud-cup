@@ -153,14 +153,19 @@
         this.currentRoom = roomId;
         this.gameData = fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
         this.gameMetadata = fbutil.syncObject('room/' + roomId + '/game');
+        this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
       };
 
       // number
       this.getNumber = function() {
-        return parseInt(this.gameMetadata.number, 10);
+        return parseInt(this.currentGame.$value, 10);
       };
 
       this.setNumber = function(number) {
+        this.currentGame.$value = number;
+        this.currentGame.$save();
+
+        // TODO remove this once we switch the app
         this.gameMetadata.number = number;
         this.gameMetadata.$save();
       };
