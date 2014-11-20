@@ -42,7 +42,6 @@ angular.module('myApp.controllers', ['firebase.utils'])
         fbutil.ref('rooms').update(obj);
         gameDataService.setRoom(roomId);
         gameDataService.setNumber(-1);
-        gameDataService.setType('');
         $scope.players = playersService.asArray(roomId);
         $scope.code = roomId;
       });

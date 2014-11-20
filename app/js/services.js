@@ -140,7 +140,6 @@
     .service('gameDataService', function($rootScope, fbutil, playersService) {
       this.currentRoom = null;
       this.gameData = null;
-      this.gameMetadata = null;
       this.currentRoom = null;
       this.players = null;
 
@@ -149,7 +148,6 @@
         this.players = playersService.asArray(roomId);
         this.gameData = fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
         this.games = fbutil.syncObject('room/' + roomId + '/games' , {endAt: null});
-        this.gameMetadata = fbutil.syncObject('room/' + roomId + '/game');
         this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
       };
 
@@ -168,8 +166,6 @@
         };
         this.games.$save();
 
-        // TODO remove this
-        this.setType(type);
         console.log('game ' + this.getNumber() + ' is ' + this.getType());
       };
 
@@ -181,22 +177,14 @@
       this.setNumber = function(number) {
         this.currentGame.$value = number;
         this.currentGame.$save();
-
-        // TODO remove this once we switch the app
-        this.gameMetadata.number = number;
-        this.gameMetadata.$save();
-      };
-
-      // TODO remove
-      this.setType = function(type) {
-        this.gameMetadata.type = type;
-        this.gameMetadata.$save();
       };
 
       // string
       this.getType = function() {
-        //return this.games[this.getNumber()].type;
-        return this.gameMetadata.type;
+        if (!this.games[this.getNumber()]) {
+          return '';
+        }
+        return this.games[this.getNumber()].type;
       };
 
       // Firebase object with game data
