@@ -49,19 +49,23 @@ angular.module('myApp.controllers', ['firebase.utils'])
 
     $scope.init = function() {
       findRoomId(1);
+
+      var cancelWatch = $scope.$watch(gameDataService.isStarted.bind(gameDataService), function() {
+        if ($location.path().indexOf('start') == -1) {
+          cancelWatch();
+          return;
+        }
+        if (gameDataService.isStarted()) {
+          cancelWatch();
+          $scope.start();
+        }
+      });
     };
 
   }])
 
   .controller('GameCtrl', function($scope, $location, $timeout, gameRunner, playersService, gameDataService) {
-    $scope.$watch(function() {
-      return $location.search().code;
-    }, function() {
-      gameDataService.joinRoom($location.search().code);
-    }.bind(this));
-
     $scope.code = $location.search().code;
-    gameDataService.joinRoom($scope.code); // set the initial value before the watch is called
     $scope.players = playersService.asArray($scope.code);
     $scope.gameDataService = gameDataService;
   });
