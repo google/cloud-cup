@@ -37,9 +37,10 @@
   opacity: 1;
 }
 
-.gameContainer .game.game.ng-hide-add {
+/* read more at http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html */
+.gameContainer .game.ng-hide-add {
   /* Only move the slide that is being removed */
-  transition: opacity cubic-bezier(.4,0,.2,1) 1s, transform cubic-bezier(.4,0,.2,1) 1s;
+  transition: opacity cubic-bezier(.4,0,.2,1) 1s, transform cubic-bezier(.4,0,.2,1) 0.7s;
 }
 .gameContainer .game.ng-hide {
   transform: translateY(1000px);
