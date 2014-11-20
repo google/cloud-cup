@@ -6,20 +6,40 @@
 
 .ranking {
   width: 50%;
-  border: solid 1px black;
 }
 
-.ranking td {
-  padding: 20px;
+.ranking table, .ranking tr {
+  width: 100%;
 }
 
-.ranking tr:nth-child(even) {
-  background: #DDD;
+.ranking .position {
+  padding-left: 32px;
 }
 
-.ranking tr:nth-child(odd) {
-  background: #EEE;
+.ranking .avatar {
+  padding-left: 16px;
+  padding-right: 16px;
 }
+
+.ranking .score {
+  padding-right: 32px;
+}
+
+
+.rankingPlayer .face {
+  width: 80px;
+}
+
+.ranking {
+  font-size: 40px;
+}
+
+.ranking .name {
+  font-weight: lighter;
+  width: 100%;
+}
+
+
 
 .rankingPlayer.ng-move {
   transition: all linear 1s;

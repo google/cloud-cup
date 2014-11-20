@@ -22,14 +22,12 @@
   <div align="center">
     <h2>Ranking</h2>
 
-    <table class="ranking">
+    <table class="ranking card">
       <tr ng-repeat="player in players | orderBy:'-score || 0'" class="rankingPlayer">
-        <td>
-          <b>{{$index+1}}</b>
-          <img ng-src="{{player.imageUrl}}" class="face"/>
-        </td>
-        <td><b>{{player.name}}</b></td>
-        <td align="right"><b>{{player.score || 0}}</b>
+        <td class="position">{{$index+1}}</td>
+        <td class="avatar"><img ng-src="{{player.imageUrl}}" class="face"/></td>
+        <td class="name">{{player.name}}</td>
+        <td class="score">{{player.score || 0}}</td>
       </tr>
     </table>
 
