@@ -33,7 +33,7 @@
     <h2>Ranking</h2>
 
     <table class="ranking card">
-      <tr ng-repeat="player in players | orderBy:'-score || 0'" class="rankingPlayer">
+      <tr ng-repeat="player in players | orderBy:'-score'" class="rankingPlayer">
         <td class="position">{{$index+1}}</td>
         <td class="avatar"><img ng-src="{{player.imageUrl}}" class="face med"/></td>
         <td class="name">{{player.name}}</td>
