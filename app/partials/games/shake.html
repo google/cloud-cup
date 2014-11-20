@@ -7,8 +7,8 @@
       <td>
         <span class="finishingLine">&nbsp;</span>
         <img ng-src="{{player.imageUrl}}" class="face"
-             style="margin-left: {{(gameData.players[player.$id]||0)*20}}px;
-                    transform: rotate({{gameData.players[player.$id]*15}}deg);
+             style="margin-left: {{(gameData[player.$id]||0)*20}}px;
+                    transform: rotate({{gameData[player.$id]*15}}deg);
                     transition: all 0.5s;"/>
       </td>
     </tr>

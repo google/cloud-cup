@@ -1,7 +1,7 @@
 angular.module('myApp.games', [])
 
 // tap
-.directive('tapGame', function($q, gameRunner) {
+.directive('tapGame', function($q, gameRunner, gameDataService) {
   return {
     restrict: 'E',
     templateUrl: 'partials/games/tap.html',
@@ -9,6 +9,7 @@ angular.module('myApp.games', [])
       $scope.maxTaps = 20;
 
       gameRunner.registerGame('tap', function() {
+        $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
@@ -24,7 +25,7 @@ angular.module('myApp.games', [])
 })
 
 // shake
-.directive('shakeGame', function($q, gameRunner) {
+.directive('shakeGame', function($q, gameRunner, gameDataService) {
   return {
     restrict: 'E',
     templateUrl: 'partials/games/shake.html',
@@ -32,6 +33,7 @@ angular.module('myApp.games', [])
       $scope.maxTaps = 20;
 
       gameRunner.registerGame('shake', function() {
+        $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
