@@ -66,7 +66,13 @@
 
         var self = this;
         var count = 60;
+        // Store the room so we don't update the wrong game.
+        var room = this.currentRoom;
         var waitInterval = $interval(function() {
+          if (!this.currentRoom || this.currentRoom != room) {
+            $interval.cancel(waitInterval);
+            return;
+          }
           count = count - 1;
 
           if (count == 45) {
@@ -81,7 +87,7 @@
           } else {
             $rootScope.countdown = count;
           }
-        }, 100);
+        }.bind(this), 100);
       };
 
       this.incrementWinnerScores = function(winners) {
@@ -194,21 +200,32 @@
         return this.games[this.getNumber()].type;
       };
 
-      this.isWaiting = function() {
-        return this.state.$value == this.STATES.WAITING;
-      };
-
-      this.isPlaying = function() {
-        return this.state.$value == this.STATES.PLAYING;
-      };
-
-      this.isDone = function() {
-        return this.state.$value == this.STATES.DONE;
-      }
-
       this.setState = function(state) {
         this.state.$value = state;
         this.state.$save();
+      };
+
+      this.getState = function() {
+        if (!this.state) {
+          return null;
+        }
+        return this.state.$value;
+      };
+
+      this.isStarted = function() {
+        return this.getState() && this.getState() != this.STATES.NOT_STARTED;
+      };
+
+      this.isWaiting = function() {
+        return this.getState() == this.STATES.WAITING;
+      };
+
+      this.isPlaying = function() {
+        return this.getState() == this.STATES.PLAYING;
+      };
+
+      this.isDone = function() {
+        return this.getState() == this.STATES.DONE;
       };
 
       // Firebase object with game data for the current room and number
