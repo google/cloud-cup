@@ -1,12 +1,13 @@
 <div class='startContainer'>
 
-  <div class="logo">
-    <img src="img/trophee.svg" />
+  <div class="header">
+    <div class="logo">
+    </div>
   </div>
 
   <div class="player-container">
     <div ng-repeat="player in players" class="player">
-      <img ng-src="{{player.imageUrl}}" class="face"/><br>
+      <img ng-src="{{player.imageUrl}}" class="face big"/><br>
       <b>{{player.name}}</b>
     </div>
 

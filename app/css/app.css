@@ -10,6 +10,7 @@ html, body
 {
   height: 100%;
   font-family: RobotoDraft, Roboto, sans-serif;
+  background-color: #f9f9f9;
 }
 
 .page {
@@ -33,8 +34,16 @@ a {
 }
 
 .face {
-  border-radius: 30px;
+  border-radius: 100%;
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px;
+}
+
+.face.med {
+  width: 70px;
+}
+
+.face.big {
+  width: 96px;
 }
