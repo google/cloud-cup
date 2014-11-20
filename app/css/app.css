@@ -33,17 +33,21 @@ a {
   padding: 8px;
 }
 
+.player-name-box {
+  text-align: center;
+  width: 150px;
+  height: 150px;
+}
+
 .face {
   border-radius: 100%;
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px;
 }
-
 .face.med {
-  width: 70px;
+  width: 75px;
 }
-
 .face.big {
   width: 96px;
 }

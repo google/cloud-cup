@@ -4,6 +4,18 @@
   height: 5px;
 }
 
+.winners-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.winners-list {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .ranking {
   width: 50%;
 }
@@ -23,11 +35,6 @@
 
 .ranking .score {
   padding-right: 32px;
-}
-
-
-.rankingPlayer .face {
-  width: 80px;
 }
 
 .ranking {
