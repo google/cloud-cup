@@ -1,10 +1,16 @@
 <div>
-  <p>Shake your phone!</p>
+  <h2>Shake your phone!</h2>
+
   <table>
-    <table>
-      <tr ng-repeat="player in players">
-        <td>{{player.name}}</td>
-        <td>{{gameData.players[player.$id]}}</td>
-      </tr>
-    </table>
+    <tr ng-repeat="player in players">
+      <td><b>{{player.name}}</b></td>
+      <td>
+        <span class="finishingLine">&nbsp;</span>
+        <img ng-src="{{player.imageUrl}}" class="face"
+             style="margin-left: {{(gameData.players[player.$id]||0)*20}}px;
+                    transform: rotate({{gameData.players[player.$id]*15}}deg);
+                    transition: all 0.5s;"/>
+      </td>
+    </tr>
+  </table>
 </div>

@@ -77,3 +77,10 @@
   border-radius: 3px;
   text-align: center;
 }
+
+.finishingLine {
+  position: relative;
+  left: 420px;
+  width: 10px;
+  background-color: #000;
+}
