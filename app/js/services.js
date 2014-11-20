@@ -42,12 +42,6 @@
       };
 
       this.switchGame = function() {
-        if (gameDataService.getNumber() == this.MAX_GAMES) {
-          // TODO Show game over screen with final scores
-          console.log('game over');
-          return;
-        }
-
         var newGame = this.games[Math.floor((Math.random() * this.games.length))];
         this.setGame(this.getNextGameNumber(), newGame);
         this.startGame(newGame);
@@ -60,8 +54,18 @@
         this.startFunctions[gameType](this.currentRoom).then(function(winners) {
           // update score
           this.incrementWinnerScores(winners);
-          this.waitingScreen();
+          if (gameDataService.getNumber() == this.MAX_GAMES) {
+            this.endScreen();
+          } else {
+            this.waitingScreen();
+          }
         }.bind(this));
+      };
+
+      this.endScreen = function() {
+        gameDataService.setType('end');
+        // TODO Show game over screen with final scores
+        console.log('game over');
       };
 
       this.waitingScreen = function() {
