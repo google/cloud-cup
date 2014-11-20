@@ -78,8 +78,8 @@
 
       this.incrementWinnerScores = function(winners) {
         winners.forEach(function(player) {
-          var score = (this.players[player.$id].score || 0) + 1;
-          this.players[player.$id].score = score;
+          var currentScore = parseInt(this.players[player.$id].score) || 0;
+          this.players[player.$id].score = currentScore + 1;
         }.bind(this));
         this.players.$save();
       };

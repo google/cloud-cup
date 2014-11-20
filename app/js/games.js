@@ -24,7 +24,7 @@ angular.module('myApp.games', [])
 
       gameRunner.registerGame('tap', function() {
         var deferred = $q.defer();
-        $scope.gameMetadata.$watch(function() {
+        $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
             $scope.players, $scope.maxTaps);
           if (winners != null) {
@@ -47,7 +47,7 @@ angular.module('myApp.games', [])
 
       gameRunner.registerGame('shake', function() {
         var deferred = $q.defer();
-        $scope.gameMetadata.$watch(function() {
+        $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
             $scope.players, $scope.maxTaps);
           if (winners != null) {
