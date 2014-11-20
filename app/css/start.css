@@ -8,6 +8,11 @@
   height: 100%;
 }
 
+.startContainer .logo {
+  /* our image is too large */
+  margin-bottom: -50px;
+}
+
 .startContainer .player-container {
   flex-grow: 1;
   display: flex;
