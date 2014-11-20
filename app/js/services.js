@@ -5,10 +5,6 @@
 
    angular.module('myApp.services', [])
 
-    .factory('joinedPlayersList', ['fbutil', function(fbutil) {
-      return fbutil.syncArray('joinedPlayers', {endAt: null});
-    }])
-
     .service('gameRunner', function($rootScope, $location, $interval, gameDataService, playersService) {
       // map of game ID to start function that returns a promise
       // which resolves to a list of winners when the game is over
