@@ -1,0 +1,5 @@
+.loading {
+  transition:all linear 0.1s;
+  margin: 0 auto;
+  height: 5px;
+}
