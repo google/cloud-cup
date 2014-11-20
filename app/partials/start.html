@@ -1,20 +1,24 @@
 <div class='startContainer'>
-  <div>
-    <p>Enter this code on the phones to join the game.</p>
-    <div ng-show="code != null" data-ng-init="init()">
-      <div class='gameCode'>{{code}}</div>
-      <div ng-show="players.length == 0">No one has joined yet.</div>
-      <div ng-show="players.length == 1">Need at least one other player.</div>
-      <button ng-click="start()" class="startButton" ng-show="players.length > 1">Start</button>
-      <button ng-click="addDummyPlayers()">Add dummy players for testing</button>
-    </div>
-  </div>
 
-  <div>
+  <div class="player-container">
+    <div ng-show="players.length == 0">No one has joined yet.</div>
+    <div ng-show="players.length == 1">Need at least one other player.</div>
     <div ng-repeat="player in players" class="player">
       <img ng-src="{{player.imageUrl}}" class="face"/><br>
       <b>{{player.name}}</b>
     </div>
   </div>
+
+  <div class="room-container">
+    <div ng-show="code != null" data-ng-init="init()">
+      <div class='gameCode card'>{{code}}</div>
+    </div>
+  </div>
+
+
+<div class="temp-buttons">
+  <button ng-click="start()" ng-show="players.length > 1">Start</button>
+  <button ng-click="addDummyPlayers()">Add dummy players for testing</button>
+</div>
 
 </div>

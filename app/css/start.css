@@ -1,0 +1,26 @@
+/* start page */
+
+.startContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.startContainer > div {
+  flex-grow: 1;
+}
+
+.startContainer .player-container {
+  flex-grow: 1;
+}
+
+.startContainer .room-container {
+  flex-grow: 2;
+}
+
+.startContainer .room-container .gameCode {
+  padding: 30px;
+  font-size: 150px;
+  font-weight: lighter;
+}

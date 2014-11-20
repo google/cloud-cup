@@ -1,0 +1,7 @@
+.gameContainer {
+  display: flex;
+}
+
+.gameContainer > div {
+  flex: 1;
+}

@@ -1,0 +1,6 @@
+.progressPanel {
+  background-color: rgb(206, 228, 225);
+  border: 2px solid rgb(140, 166, 163);
+  border-radius: 3px;
+  text-align: center;
+}
