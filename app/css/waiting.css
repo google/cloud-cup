@@ -3,3 +3,20 @@
   margin: 0 auto;
   height: 5px;
 }
+
+.ranking {
+  width: 50%;
+  border: solid 1px black;
+}
+
+.ranking td {
+  padding: 20px;
+}
+
+.ranking tr:nth-child(even) {
+  background: #DDD;
+}
+
+.ranking tr:nth-child(odd) {
+  background: #EEE;
+}

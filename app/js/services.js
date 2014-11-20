@@ -67,7 +67,7 @@
 
       this.waitingScreen = function() {
         var self = this;
-        var count = 30;
+        var count = 60;
         gameDataService.setState(gameDataService.STATES.WAITING);
         var waitInterval = $interval(function() {
           count = count - 1;
