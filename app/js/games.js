@@ -21,13 +21,6 @@ angular.module('myApp.games', [])
     templateUrl: 'partials/games/tap.html',
     link: function($scope) {
       $scope.maxTaps = 20;
-      $scope.range = function(min, max) {
-        var input = [];
-        for (var i = min; i <= max; i++) {
-          input.push(i);
-        }
-        return input;
-      };
 
       gameRunner.registerGame('tap', function() {
         var deferred = $q.defer();

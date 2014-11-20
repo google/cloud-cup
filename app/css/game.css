@@ -12,3 +12,10 @@
   width: 10px;
   background-color: #000;
 }
+
+.loading {
+  transition:all linear 0.1s;
+  box-shadow: 5px 5px 5px #888888;
+  border-radius: 25px;
+  margin: 0 auto;
+}
