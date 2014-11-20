@@ -60,7 +60,7 @@
       };
 
       this.endScreen = function() {
-        gameDataService.setType('end');
+        gameDataService.setState(gameDataService.STATES.DONE);
         // TODO Show game over screen with final scores
         console.log('game over');
       };
@@ -68,11 +68,11 @@
       this.waitingScreen = function() {
         var self = this;
         var count = 30;
-        gameDataService.setWaiting(true);
+        gameDataService.setState(gameDataService.STATES.WAITING);
         var waitInterval = $interval(function() {
           count = count - 1;
           if (count <= 0) {
-            gameDataService.setWaiting(false);
+            gameDataService.setState(gameDataService.STATES.PLAYING);
             self.switchGame();
             $interval.cancel(waitInterval);
           } else {
@@ -139,12 +139,20 @@
       this.currentRoom = null;
       this.players = null;
 
-      this.setRoom = function(roomId) {
+      this.STATES = {
+        NOT_STARTED: 'not-started',
+        WAITING: 'waiting',
+        PLAYING: 'playing',
+        DONE: 'done'
+      };
+
+      this.joinRoom = function(roomId) {
         this.currentRoom = roomId;
         this.players = playersService.asArray(roomId);
         this.games = fbutil.syncObject('room/' + roomId + '/games' , {endAt: null});
         this.currentGame = fbutil.syncObject('room/' + roomId + '/currentGame');
-        this.waiting = fbutil.syncObject('room/' + roomId + '/waiting');
+        this.state = fbutil.syncObject('room/' + roomId + '/state');
+        this.setState(this.STATES.NOT_STARTED);
       };
 
       // Add a new game at the next number and update currentGame
@@ -184,13 +192,21 @@
       };
 
       this.isWaiting = function() {
-        return this.waiting.$value == true;
+        return this.state.$value == this.STATES.WAITING;
       };
 
-      this.setWaiting = function(waiting) {
-        this.waiting.$value = waiting;
-        this.waiting.$save();
+      this.isPlaying = function() {
+        return this.state.$value == this.STATES.PLAYING;
+      };
+
+      this.isDone = function() {
+        return this.state.$value == this.STATES.DONE;
       }
+
+      this.setState = function(state) {
+        this.state.$value = state;
+        this.state.$save();
+      };
 
       // Firebase object with game data for the current room and number
       this.getGameData = function() {

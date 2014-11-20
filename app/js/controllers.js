@@ -40,7 +40,7 @@ angular.module('myApp.controllers', ['firebase.utils'])
         obj[roomId] = true;
         fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
         fbutil.ref('rooms').update(obj);
-        gameDataService.setRoom(roomId);
+        gameDataService.joinRoom(roomId);
         gameDataService.setNumber(-1);
         $scope.players = playersService.asArray(roomId);
         $scope.code = roomId;
@@ -57,11 +57,11 @@ angular.module('myApp.controllers', ['firebase.utils'])
     $scope.$watch(function() {
       return $location.search().code;
     }, function() {
-      gameDataService.setRoom($location.search().code);
+      gameDataService.joinRoom($location.search().code);
     }.bind(this));
 
     $scope.code = $location.search().code;
-    gameDataService.setRoom($scope.code); // set the initial value before the watch is called
+    gameDataService.joinRoom($scope.code); // set the initial value before the watch is called
     $scope.players = playersService.asArray($scope.code);
     $scope.gameDataService = gameDataService;
   });
