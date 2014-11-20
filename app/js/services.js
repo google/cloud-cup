@@ -9,7 +9,7 @@
       return fbutil.syncArray('joinedPlayers', {endAt: null});
     }])
 
-    .service('gameRunner', function($rootScope, $location, $timeout, gameMetadataForRoom, gameDataService, playersService) {
+    .service('gameRunner', function($rootScope, $location, $interval, gameMetadataForRoom, gameDataService, playersService) {
       // map of game ID to start function that returns a promise
       // which resolves to a list of winners when the game is over
       this.startFunctions = {};
@@ -39,7 +39,7 @@
         this.gameMetadata = gameMetadataForRoom(roomId);
         this.players = playersService.asObject(roomId);
         this.setGame(0, null);
-        this.switchGame();
+        this.waitingScreen();
       };
 
       this.switchGame = function() {
@@ -70,9 +70,16 @@
         this.gameMetadata.$save();
 
         var self = this;
-        $timeout(function() {
-          self.switchGame();
-        }, 3000);
+        var count = 30;
+        var waitInterval = $interval(function() {
+          count = count - 1;
+          if (count <= 0) {
+            self.switchGame();
+            $interval.cancel(waitInterval);
+          } else {
+            $rootScope.countdown = count;
+          }
+        }, 100);
       };
 
       this.incrementWinnerScores = function(winners) {
