@@ -19,9 +19,9 @@ angular.module('myApp.controllers', ['firebase.utils'])
     // Just for testing when we have no phone
     $scope.addDummyPlayers = function() {
       var p1 = {'name': 'Mirna',
-                'imageUrl': 'https://lh5.googleusercontent.com/-K0EoyJLIo4E/AAAAAAAAAAI/AAAAAAAADH0/-DOy9kRTn14/photo.jpg?sz=100'}
+                'imageUrl': 'https://lh5.googleusercontent.com/-K0EoyJLIo4E/AAAAAAAAAAI/AAAAAAAADH0/-DOy9kRTn14/photo.jpg?sz=100'};
       fbutil.ref('room/' + $scope.code + '/players').push(p1);
-    }
+    };
 
     var findRoomId = function(n) {
       // Each time we don't find a room, we multiply the range by 2.
@@ -55,9 +55,16 @@ angular.module('myApp.controllers', ['firebase.utils'])
 
   }])
 
-  .controller('GameCtrl', function($scope, $location, $timeout, gameRunner, playersService, gameDataService, gameMetadataForRoom) {
+  .controller('GameCtrl', function($scope, $location, $timeout, gameRunner, playersService, gameDataService) {
+    $scope.$watch(function() {
+      return $location.search().code;
+    }, function() {
+      gameDataService.setRoom($location.search().code);
+    }.bind(this));
+
     $scope.code = $location.search().code;
+    gameDataService.setRoom($scope.code); // set the initial value before the watch is called
     $scope.players = playersService.asArray($scope.code);
-    $scope.gameData = gameDataService.forRoom($scope.code);
-    $scope.gameMetadata = gameMetadataForRoom($scope.code);
+    $scope.gameDataService = gameDataService;
+    $scope.gameData = gameDataService.getGameData();
   });

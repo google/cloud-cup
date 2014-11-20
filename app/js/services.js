@@ -9,7 +9,7 @@
       return fbutil.syncArray('joinedPlayers', {endAt: null});
     }])
 
-    .service('gameRunner', function($rootScope, $location, $interval, gameMetadataForRoom, gameDataService, playersService) {
+    .service('gameRunner', function($rootScope, $location, $interval, gameDataService, playersService) {
       // map of game ID to start function that returns a promise
       // which resolves to a list of winners when the game is over
       this.startFunctions = {};
@@ -36,14 +36,13 @@
 
       this.startNewGame = function(roomId) {
         this.currentRoom = roomId;
-        this.gameMetadata = gameMetadataForRoom(roomId);
         this.players = playersService.asObject(roomId);
         this.setGame(0, null);
         this.waitingScreen();
       };
 
       this.switchGame = function() {
-        if (this.gameMetadata.number == this.MAX_GAMES) {
+        if (gameDataService.getNumber() == this.MAX_GAMES) {
           // TODO Show game over screen with final scores
           console.log('game over');
           return;
@@ -66,8 +65,7 @@
       };
 
       this.waitingScreen = function() {
-        this.gameMetadata.type = '';
-        this.gameMetadata.$save();
+        gameDataService.setType('');
 
         var self = this;
         var count = 30;
@@ -91,18 +89,17 @@
       };
 
       this.setGame = function(gameNumber, gameType) {
-        this.gameMetadata.number = gameNumber;
+        gameDataService.setNumber(gameNumber);
         if (gameType) {
-          this.gameMetadata.type = gameType;
+          gameDataService.setType(gameType);
         }
-        this.gameMetadata.$save();
-        console.log('game ' + this.gameMetadata.number + ' is ' + this.gameMetadata.type);
+        console.log('game ' + gameDataService.getNumber() + ' is ' + gameDataService.getType());
 
-        gameDataService.clearData(this.currentRoom);
+        gameDataService.clearData();
       };
 
       this.getNextGameNumber = function() {
-        return (this.gameMetadata.number || 0) + 1;
+        return (gameDataService.getNumber() || 0) + 1;
       };
 
       // Return the players with the highest score, but only if
@@ -145,23 +142,48 @@
       };
     })
 
-    // Service for getting game data (current player progress)
-    .service('gameDataService', function(fbutil) {
-      this.forRoom = function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
+    // Service for getting game data (current number, type, and player data)
+    .service('gameDataService', function($rootScope, fbutil) {
+      this.currentRoom = null;
+      this.gameData = null;
+      this.gameMetadata = null;
+      this.currentRoom = null;
+
+      this.setRoom = function(roomId) {
+        this.currentRoom = roomId;
+        this.gameData = fbutil.syncObject('room/' + roomId + '/game/data' , {endAt: null});
+        this.gameMetadata = fbutil.syncObject('room/' + roomId + '/game');
       };
 
-      this.clearData = function(roomId) {
-        var ref = fbutil.ref('room/' + roomId + '/game/data');
+      // number
+      this.getNumber = function() {
+        return parseInt(this.gameMetadata.number, 10);
+      };
+
+      this.setNumber = function(number) {
+        this.gameMetadata.number = number;
+        this.gameMetadata.$save();
+      };
+
+      // string
+      this.getType = function() {
+        return this.gameMetadata.type;
+      };
+
+      this.setType = function(type) {
+        this.gameMetadata.type = type;
+        this.gameMetadata.$save();
+      };
+
+      // Firebase object with game data
+      this.getGameData = function() {
+        return this.gameData;
+      };
+
+      this.clearData = function() {
+        var ref = fbutil.ref('room/' + this.currentRoom + '/game/data');
         ref.remove();
       };
-    })
-
-    // Service for getting game metadata (type and number)
-    .factory('gameMetadataForRoom', ['fbutil', function(fbutil) {
-      return function(roomId) {
-        return fbutil.syncObject('room/' + roomId + '/game' );
-      };
-    }]);
+    });
 
 })();
