@@ -7,6 +7,13 @@ angular.module('myApp.games', [])
   };
 })
 
+.directive('endScreen', function($q, $timeout) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/end.html',
+  };
+})
+
 // tap
 .directive('tapGame', function($q, gameRunner) {
   return {
