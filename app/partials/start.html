@@ -1,17 +1,20 @@
 <div class='startContainer'>
 
   <div class="player-container">
-    <div ng-show="players.length == 0">No one has joined yet.</div>
-    <div ng-show="players.length == 1">Need at least one other player.</div>
     <div ng-repeat="player in players" class="player">
       <img ng-src="{{player.imageUrl}}" class="face"/><br>
       <b>{{player.name}}</b>
     </div>
+
+    <div ng-show="players.length == 0">No one has joined yet.</div>
   </div>
 
   <div class="room-container">
-    <div ng-show="code != null" data-ng-init="init()">
-      <div class='gameCode card'>{{code}}</div>
+    <div class="card message">
+      <div ng-show="code != null" data-ng-init="init()">
+        <div class='gameCode'>{{code}}</div>
+      </div>
+      <p>Install the <a href="http://go/cloud-cup-android">Cloud Cup</a> app on your Android phone and enter this game number.</p>
     </div>
   </div>
 

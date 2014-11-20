@@ -16,6 +16,11 @@ html, body
   height: 100%;
 }
 
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+
 /* material design class effect*/
 .card {
   border-radius: 2px;
@@ -27,37 +32,9 @@ html, body
   padding: 8px;
 }
 
-
-
-
-.player {
-    text-align: center;
-    width: 100px;
-    float: right;
-}
-
 .face {
   border-radius: 30px;
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px;
-}
-
-.player.ng-enter {
-  -webkit-transition: all linear 1s;
-  transition: all linear 1s;
-  opacity:0;
-}
-
-.player.ng-enter.ng-enter-active {
-  opacity:1;
-}
-
-.player.ng-enter .face {
-  transition:all linear 0.5s;
-  transform: translateX(-50px) rotate(-90deg);
-}
-.player.ng-enter.ng-enter-active .face {
-  opacity:1;
-  transform: translateX(0) rotate(0) ;
 }

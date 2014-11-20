@@ -1,5 +1,6 @@
 /* start page */
 
+
 .startContainer {
   display: flex;
   flex-direction: column;
@@ -7,20 +8,49 @@
   height: 100%;
 }
 
-.startContainer > div {
-  flex-grow: 1;
-}
-
 .startContainer .player-container {
   flex-grow: 1;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
 }
 
 .startContainer .room-container {
   flex-grow: 2;
 }
 
-.startContainer .room-container .gameCode {
+.startContainer .room-container .message {
   padding: 30px;
+}
+
+.startContainer .room-container .gameCode {
   font-size: 150px;
   font-weight: lighter;
+  text-align: center;
+}
+
+
+.player {
+    text-align: center;
+    width: 100px;
+    height: 100px;
+}
+
+.player.ng-enter {
+  transition: opacity cubic-bezier(.4,0,.2,1) 1s, width cubic-bezier(.4,0,.2,1) 0.5s , height cubic-bezier(.4,0,.2,1) 0.5s;
+  opacity:0;
+  width: 0;
+}
+
+.player.ng-enter.ng-enter-active {
+  opacity:1;
+  width: 100px;
+}
+
+.player.ng-enter .face {
+  transition:transform cubic-bezier(.4,0,.2,1) 0.5s ;
+  transform: translateX(100px) rotate(120deg);
+}
+.player.ng-enter.ng-enter-active .face {
+  transform: translateX(0) rotate(0) ;
 }
