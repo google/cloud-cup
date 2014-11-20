@@ -73,12 +73,11 @@
         $timeout(function() {
           self.switchGame();
         }, 3000);
-      }
-
+      };
 
       this.incrementWinnerScores = function(winners) {
         winners.forEach(function(player) {
-          var currentScore = parseInt(this.players[player.$id].score) || 0;
+          var currentScore = parseInt(this.players[player.$id].score, 10) || 0;
           this.players[player.$id].score = currentScore + 1;
         }.bind(this));
         this.players.$save();
