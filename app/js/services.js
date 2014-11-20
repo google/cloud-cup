@@ -40,6 +40,35 @@
       this.getNextGameNumber = function() {
         return (this.gameMetadata.number || 0) + 1;
       };
+
+      // Return the players with the highest score, but only if
+      // that score is greater than or equal to minToWin. If there
+      // are no winners, return null.
+      this.getHighWinners = function(gameData, players, minToWin) {
+        if (!gameData || !gameData.players) {
+          return;
+        }
+        var playerData = gameData.players;
+        var highestScore = 0;
+        players.forEach(function(player) {
+          var score = playerData[player.$id];
+          if (score >= highestScore) {
+            highestScore = score;
+          }
+        });
+
+        if (highestScore < minToWin) {
+          return null;
+        }
+
+        var winners = [];
+        players.forEach(function(player) {
+          if(playerData[player.$id] == highestScore) {
+            winners.push(player);
+          }
+        });
+        return winners;
+      };
     })
 
     .service('playersService', function(fbutil) {
