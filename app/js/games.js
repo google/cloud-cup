@@ -13,7 +13,6 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/tap.html',
     link: function($scope) {
-      var gameCtrl = $scope.gameCtrl;
       $scope.maxTaps = 20;
       $scope.range = function(min, max) {
         var input = [];
@@ -23,7 +22,7 @@ angular.module('myApp.games', [])
         return input;
       };
 
-      gameCtrl.registerGame('tap', function() {
+      gameRunner.registerGame('tap', function() {
         var deferred = $q.defer();
         $scope.gameMetadata.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
@@ -46,7 +45,7 @@ angular.module('myApp.games', [])
     link: function($scope) {
       $scope.maxTaps = 20;
 
-      $scope.gameCtrl.registerGame('shake', function() {
+      gameRunner.registerGame('shake', function() {
         var deferred = $q.defer();
         $scope.gameMetadata.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,

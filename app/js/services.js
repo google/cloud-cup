@@ -9,14 +9,72 @@
       return fbutil.syncArray('joinedPlayers', {endAt: null});
     }])
 
-    .service('gameRunner', function($timeout, gameMetadataForRoom, gameDataService, playersService) {
-      this.roomId;
+    .service('gameRunner', function($rootScope, $location, $timeout, gameMetadataForRoom, gameDataService, playersService) {
+      // map of game ID to start function that returns a promise
+      // which resolves to a list of winners when the game is over
+      this.startFunctions = {};
+      this.games = [];
+      this.MAX_GAMES = 5;
+      this.GAME_LENGTH = 5000; // 10 seconds
+      this.currentRoom = null;
 
-      this.setRoom = function(roomId) {
-        this.roomId = roomId;
+      $rootScope.$watch(function() {
+        // Watch for scope.code to change, but only start when there
+        // are registered games.
+        return $location.search().code && this.games.length > 0;
+      }.bind(this), function() {
+        if (this.games.length > 0) {
+          this.startNewGame($location.search().code);
+        }
+      }.bind(this));
+
+      this.registerGame = function(gameId, startFunction) {
+        this.startFunctions[gameId] = startFunction;
+        // TODO separate list not necessary
+        this.games.push(gameId);
+      };
+
+      this.startNewGame = function(roomId) {
+        this.currentRoom = roomId;
         this.gameMetadata = gameMetadataForRoom(roomId);
         this.players = playersService.asObject(roomId);
+        this.setGame(0, null);
+        this.switchGame();
       };
+
+      this.switchGame = function() {
+        if (this.gameMetadata.number == this.MAX_GAMES) {
+          // TODO Show game over screen with final scores
+          console.log('game over');
+          return;
+        }
+
+        var newGame = this.games[Math.floor((Math.random() * this.games.length))];
+        this.setGame(this.getNextGameNumber(), newGame);
+        this.startGame(newGame);
+      };
+
+      this.startGame = function(gameType) {
+        if (!this.startFunctions[gameType]) {
+          throw new Error(gameType + ' is not a valid game type');
+        }
+        this.startFunctions[gameType](this.currentRoom).then(function(winners) {
+          // update score
+          this.incrementWinnerScores(winners);
+          this.waitingScreen();
+        }.bind(this));
+      };
+
+      this.waitingScreen = function() {
+        this.gameMetadata.type = '';
+        this.gameMetadata.$save();
+
+        var self = this;
+        $timeout(function() {
+          self.switchGame();
+        }, 3000);
+      }
+
 
       this.incrementWinnerScores = function(winners) {
         winners.forEach(function(player) {
@@ -34,7 +92,7 @@
         this.gameMetadata.$save();
         console.log('game ' + this.gameMetadata.number + ' is ' + this.gameMetadata.type);
 
-        gameDataService.clearData(this.roomId);
+        gameDataService.clearData(this.currentRoom);
       };
 
       this.getNextGameNumber = function() {
