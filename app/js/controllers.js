@@ -7,8 +7,8 @@ function randomInt(min, max) {
 }
 
 angular.module('myApp.controllers', ['firebase.utils'])
-  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersService',
-      function($scope, $location, fbutil, playersService) {
+  .controller('StartCtrl', ['$scope', '$location', 'fbutil', 'playersService', 'gameDataService',
+      function($scope, $location, fbutil, playersService, gameDataService) {
     $scope.code = null;
 
     $scope.start = function() {
@@ -40,10 +40,9 @@ angular.module('myApp.controllers', ['firebase.utils'])
         obj[roomId] = true;
         fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
         fbutil.ref('rooms').update(obj);
-        var game = {};
-        game.number = -1;
-        game.type = '';
-        fbutil.ref('room/' + roomId + '/game').set(game); // make sure the state is clean
+        gameDataService.setRoom(roomId);
+        gameDataService.setNumber(-1);
+        gameDataService.setType('');
         $scope.players = playersService.asArray(roomId);
         $scope.code = roomId;
       });
