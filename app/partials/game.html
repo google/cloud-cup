@@ -1,9 +1,9 @@
 <div class="gameContainer">
   <div class="gamePanel">
-    <waiting-screen ng-show="gameDataService.isWaiting() || gameDataService.isDone()"></waiting-screen>
+    <waiting-screen ng-show="gameDataService.isWaiting() || gameDataService.isDone()" class="game"></waiting-screen>
     <div ng-show="gameDataService.isPlaying()">
-      <tap-game ng-show="gameDataService.getType() == 'tap'"></tap-game>
-      <shake-game ng-show="gameDataService.getType() == 'shake'"></shake-game>
+      <tap-game ng-show="gameDataService.getType() == 'tap'" class="game"></tap-game>
+      <shake-game ng-show="gameDataService.getType() == 'shake'" class="game"></shake-game>
     </div>
   </div>
 </div>
