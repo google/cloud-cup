@@ -4,9 +4,11 @@
   <div class="row-players">
     <div ng-repeat="player in players" class="row-player">
       <img ng-src="{{player.imageUrl}}"
-            class="face huge"
+            class="face huge growing-border"
             style="transform: rotate({{gameData[player.$id]*180}}deg);
-                  transition: all 1s;"/>
+                   transition: all 1s;
+                   border-width: {{(gameData[player.$id] / maxHalfTurns)*50}}px;
+                   border-color: hsl({{ 30 + (gameData[player.$id] / maxHalfTurns)*90}}, 80%, 70%);"/>
     </div>
   </div>
 </div>

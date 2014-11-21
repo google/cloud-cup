@@ -98,3 +98,9 @@
 .row-player .face.huge {
   margin: 32px;
 }
+
+.growing-border {
+  border-color: #4CAF50; /* Google Green 500 */
+  border-style: solid;
+  border-width: 0;
+}
