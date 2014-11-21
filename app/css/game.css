@@ -199,3 +199,10 @@
     -webkit-animation-name: shake2;
     animation-name: shake2;
 }
+
+.potato {
+  width: 50px;
+  height: 50px;
+  background-color: #DB4437;
+  border-radius: 100%;
+}

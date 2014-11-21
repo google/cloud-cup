@@ -1,6 +1,6 @@
 <div>
 
-  <h1>Slide when you have the potato!</h1>
+  <h1>Slide up on your phone when you have the hot potato!</h1>
 
   <table>
     <tr>
@@ -23,8 +23,8 @@
     </tr>
     <tr>
       <td ng-repeat="player in players" style="position: relative">
-        <img ng-show="$index == potatoIndex" src="img/potato.jpg"
-             style="position: absolute; left: -20px">
+        <div ng-show="$index == potatoIndex" class="potato"
+             style="position: absolute; left: -20px"></div>
       </td>
     </tr>
   </table>
