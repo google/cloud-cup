@@ -161,3 +161,42 @@
   height: 20px;
   display: block;
 }
+
+.animated {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite;
+}
+@-webkit-keyframes shake1 {
+    0%, 100% {-webkit-transform: translateY(0);}
+    10%, 30%, 50%, 70%, 90% {-webkit-transform: translateY(-4px);}
+    20%, 40%, 60%, 80% {-webkit-transform: translateY(4px);}
+}
+
+@keyframes shake1 {
+    0%, 100% {transform: translateY(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateY(-3px);}
+    20%, 40%, 60%, 80% {transform: translateY(3px);}
+}
+@-webkit-keyframes shake2 {
+    0%, 100% {-webkit-transform: translateY(0);}
+    10%, 30%, 50%, 70%, 90% {-webkit-transform: translateY(-8px);}
+    20%, 40%, 60%, 80% {-webkit-transform: translateY(8px);}
+}
+
+@keyframes shake2 {
+    0%, 100% {transform: translateY(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateY(-8px);}
+    20%, 40%, 60%, 80% {transform: translateY(8px);}
+}
+.shake1 {
+    -webkit-animation-name: shake1;
+    animation-name: shake1;
+}
+.shake2 {
+    -webkit-animation-name: shake2;
+    animation-name: shake2;
+}
