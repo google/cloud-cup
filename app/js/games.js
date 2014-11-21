@@ -66,6 +66,7 @@ angular.module('myApp.games', [])
       this.index = 0;
       this.deferred = null;
       this.currentTimeout = null;
+      this.gameData = null;
 
       // Generates a random color from the colors list.
       // If opt_excludedColor is non-null, ensures it is not
@@ -125,7 +126,7 @@ angular.module('myApp.games', [])
             // player already out
             return;
           }
-          if (!this.isValid($scope.gameData[playerId])) {
+          if (!this.isValid(this.gameData[playerId])) {
             this.playerStatus[playerId] = false;
           } else {
             remainingPlayers.push(player);
@@ -134,7 +135,7 @@ angular.module('myApp.games', [])
 
         // If there is one or zero remaining players, game over
         if (remainingPlayers.length == 0 || remainingPlayers.length == 1) {
-          deferred.resolve(remainingPlayers);
+          this.deferred.resolve(remainingPlayers);
           if (this.currentTimeout) {
             $timeout.cancel(this.currentTimeout);
           }
@@ -181,17 +182,20 @@ angular.module('myApp.games', [])
         this.index = 0;
         this.run();
       };
+
+      this.play = function() {
+        this.gameData = gameDataService.getGameData();
+        this.deferred = $q.defer();
+        this.gameData.$watch(function() {
+          this.checkForWinners();
+        }.bind(this));
+        return this.deferred.promise;
+      };
     },
     link: function($scope, elem, attrs, ctrl) {
       gameRunner.registerGame('sequence', function() {
         ctrl.init();
-
-        $scope.gameData = gameDataService.getGameData();
-        deferred = $q.defer();
-        $scope.gameData.$watch(function() {
-          ctrl.checkForWinners();
-        }.bind(ctrl));
-        return deferred.promise;
+        return ctrl.play();
       });
     }
   };
