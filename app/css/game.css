@@ -60,3 +60,29 @@
   width: 10px;
   background-color: #000;
 }
+
+.mathExpression {
+  font-size: 50px;
+}
+
+.mathFaceContainer {
+  display: inline-block;
+}
+
+.mathNoAnswer {
+  opacity: .5;
+}
+
+.mathRedX {
+  display: none;
+  background: url("../img/redX.png") no-repeat;
+  position: absolute;
+  width: 109px;
+  height: 109px;
+  margin: 8px;
+  opacity: 0.7;
+}
+
+.mathWrongAnswer .mathRedX {
+  display: block;
+}

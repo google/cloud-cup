@@ -128,6 +128,19 @@
         });
         return winners;
       };
+
+      this.getMatchingWinners = function(gameData, players, expectedValue) {
+        var winners = [];
+        players.forEach(function(player) {
+          if(gameData[player.$id] == expectedValue) {
+            winners.push(player);
+          }
+        });
+        if (winners.length == 0) {
+          return null;
+        }
+        return winners;
+      }
     })
 
     .service('playersService', function(fbutil) {

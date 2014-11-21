@@ -4,6 +4,7 @@
     <div ng-show="gameDataService.isPlaying()">
       <tap-game ng-show="gameDataService.getType() == 'tap'" class="game"></tap-game>
       <shake-game ng-show="gameDataService.getType() == 'shake'" class="game"></shake-game>
+      <math-game ng-show="gameDataService.getType() == 'math'" class="game"></math-game>
     </div>
   </div>
 </div>
