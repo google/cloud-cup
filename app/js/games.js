@@ -211,7 +211,7 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/turn.html',
     link: function($scope) {
-      $scope.maxHalfTurns = 8;
+      $scope.maxHalfTurns = 4;
 
       gameRunner.registerGame('turn', function() {
         $scope.gameData = gameDataService.getGameData();
