@@ -10,7 +10,7 @@
       // which resolves to a list of winners when the game is over
       this.startFunctions = {};
       this.games = [];
-      this.MAX_GAMES = 5;
+      this.MAX_GAMES = 10;
       this.currentRoom = null;
       this.players = {};
 

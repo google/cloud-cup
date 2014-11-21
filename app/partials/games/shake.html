@@ -1,8 +1,8 @@
 <div>
   <h1>Shake your body</h1>
     <div ng-repeat="player in players" class="player-line-row">
-        <img ng-src="{{player.imageUrl}}" class="face animated shake{{(gameData[player.$id] / maxTaps) > 0.4 ? '2' : '1'}}"
-             style="margin-left: {{(gameData[player.$id] / maxTaps)*100}}%;
+        <img ng-src="{{player.imageUrl}}" class="face animated shake{{(gameData[player.$id] / shakeCtrl.maxTaps) > 0.4 ? '2' : '1'}}"
+             style="margin-left: {{(gameData[player.$id] / shakeCtrl.maxTaps)*100}}%;
                     transition: margin-left 0.5s;"/>
     </div>
 </div>
