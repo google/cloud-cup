@@ -48,6 +48,158 @@ angular.module('myApp.games', [])
   };
 })
 
+// sequence
+.directive('sequenceGame', function($q, $timeout, gameRunner, gameDataService) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/sequence.html',
+    controllerAs: 'ctrl',
+    controller: function($scope) {
+      this.sequenceLength = 100;
+      this.colors = [
+        'r' /*red*/, 'g' /*green*/, 'b' /*blue*/, 'y' /*yellow*/
+      ];
+
+      this.color = null;
+      this.sequence = null;
+      this.playerStatus = {};
+      this.index = 0;
+      this.deferred = null;
+      this.currentTimeout = null;
+      this.gameData = null;
+
+      // Generates a random color from the colors list.
+      // If opt_excludedColor is non-null, ensures it is not
+      // returned;
+      this.randomColor = function(opt_excludedColor) {
+        var rand = Math.floor(Math.random() * 4);
+        var color = this.colors[rand];
+        if (opt_excludedColor && color == opt_excludedColor) {
+          return this.randomColor(opt_excludedColor);
+        } else {
+          return color;
+        }
+      };
+
+      this.genSequence = function() {
+        var sequence = [];
+        sequence[0] = this.randomColor();
+        for (var i = 1; i < this.sequenceLength; i++) {
+          // Don't allow duplicate colors in a row
+          sequence.push(this.randomColor(sequence[i - 1]));
+        }
+        return sequence;
+      };
+
+      this.run = function() {
+        // TODO get faster as game progresses
+        this.currentTimeout = $timeout(function() {
+          this.color = this.sequence[this.index];
+          this.index++;
+          if (!this.checkForWinners()) {
+            this.run();
+          }
+        }.bind(this), 1000);
+      };
+
+      this.getStyle = function(color) {
+        switch(color) {
+          case 'r':
+            return 'googleRed';
+          case 'b':
+            return 'googleBlue';
+          case 'g':
+            return 'googleGreen';
+          case 'y':
+            return 'googleYellow';
+          default:
+            return '';
+        }
+      };
+
+      // returns true if has winners (game over)
+      this.checkForWinners = function() {
+        var remainingPlayers = [];
+        $scope.players.forEach(function(player) {
+          var playerId = player.$id;
+          if (!this.playerStatus[playerId]) {
+            // player already out
+            return;
+          }
+          if (!this.isValid(this.gameData[playerId])) {
+            this.playerStatus[playerId] = false;
+          } else {
+            remainingPlayers.push(player);
+          }
+        }.bind(this));
+
+        // If there is one or zero remaining players, game over
+        if (remainingPlayers.length == 0 || remainingPlayers.length == 1) {
+          this.deferred.resolve(remainingPlayers);
+          if (this.currentTimeout) {
+            $timeout.cancel(this.currentTimeout);
+          }
+          return true;
+        }
+        return false;
+      };
+
+      this.isValid = function(playerSequence) {
+        // We don't have any data yet
+        if (playerSequence == 0) {
+          // Player fails if there have been at least
+          // 5 values and they haven't entered anything.
+          return this.index < 5;
+        }
+        for (var i = 0; i < this.sequence.length; i++) {
+          var playerInput = playerSequence.charAt(i);
+          if (i > this.index) {
+            return true;
+          }
+          if (!playerInput || playerInput == '') {
+            if (i < this.index - 4) {
+              return false;
+            }
+            // The player is behind but hasn't failed yet
+            return true;
+          }
+          if (playerInput != this.sequence[i]) {
+            return false;
+          }
+        }
+        return false;
+      };
+
+      this.init = function() {
+        // init players
+        remainingPlayers = [];
+        $scope.players.forEach(function(player) {
+          this.playerStatus[player.$id] = true;
+        }.bind(this));
+
+        this.color = '';
+        this.sequence = this.genSequence();
+        this.index = 0;
+        this.run();
+      };
+
+      this.play = function() {
+        this.gameData = gameDataService.getGameData();
+        this.deferred = $q.defer();
+        this.gameData.$watch(function() {
+          this.checkForWinners();
+        }.bind(this));
+        return this.deferred.promise;
+      };
+    },
+    link: function($scope, elem, attrs, ctrl) {
+      gameRunner.registerGame('sequence', function() {
+        ctrl.init();
+        return ctrl.play();
+      });
+    }
+  };
+})
 
 // turn
 .directive('turnGame', function($q, gameRunner, gameDataService) {
@@ -91,14 +243,12 @@ angular.module('myApp.games', [])
       init();
 
       $scope.color = function(n) {
-        console.log(n);
         var r = 255 - n*3;
         var g = 255;
         if (n <= 60) {
           g -= (60 - n) * 4;
         }
         ret = 'rgb(' + r + ', ' + g + ', 0)';
-        console.log(ret);
         return ret;
       }
 
@@ -215,17 +365,17 @@ angular.module('myApp.games', [])
         return result;
       }
 
-      $scope.getStyle = function(player) {
+      $scope.getPlayerStyle = function(player) {
         if (!$scope.gameData) {
           return;
         }
         var data = $scope.gameData[player.$id];
         if (!data || data == 0) {
-          return 'mathNoAnswer';
+          return 'avatarNoAnswer';
         } else if (data == $scope.answer) {
-          return 'mathCorrectAnswer';
+          return 'avatarCorrectAnswer';
         } else {
-          return 'mathWrongAnswer';
+          return 'avatarWrongAnswer';
         }
       };
 
@@ -237,6 +387,7 @@ angular.module('myApp.games', [])
           var winners = gameRunner.getMatchingWinners($scope.gameData,
             $scope.players, answer);
           if (winners != null) {
+            // TODO add a delay and show the correct answer
             deferred.resolve(winners);
           }
         });

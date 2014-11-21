@@ -51,7 +51,7 @@
      since the .ng-hide class is already on the element rendering
      it as hidden.
      */
-  display:block!important;
+  display: block !important;
 }
 
 .finishingLine {
@@ -69,11 +69,15 @@
   display: inline-block;
 }
 
-.mathNoAnswer {
+.avatarCorrectAnswer {
+  /* TODO show a check mark */
+}
+
+.avatarNoAnswer {
   opacity: .5;
 }
 
-.mathRedX {
+.redX {
   display: none;
   background: url("../img/redX.png") no-repeat;
   position: absolute;
@@ -83,8 +87,43 @@
   opacity: 0.7;
 }
 
-.mathWrongAnswer .mathRedX {
+.avatarWrongAnswer .redX {
   display: block;
+}
+
+<<<<<<< HEAD
+.sequenceGame {
+  display: flex;
+}
+
+.sequenceBox {
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
+}
+
+.sequencePlayersContainer {
+  flex: 1;
+}
+
+.sequencePlayers {
+  text-align: right;
+}
+
+.googleRed {
+  background-color: #DB4437;
+}
+
+.googleBlue {
+  background-color: #4285F4;
+}
+
+.googleGreen {
+  background-color: #0F9D58;
+}
+
+.googleYellow {
+  background-color: #F4B400;
 }
 
 .row-players {

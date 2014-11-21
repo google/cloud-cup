@@ -1,0 +1,15 @@
+<div>
+  <h2>Tap the color that appears on the screen</h2>
+  <div class='sequenceGame'>
+    <div class='sequenceBox {{ctrl.getStyle(ctrl.color)}}'>&nbsp;</div>
+    <div class='sequencePlayersContainer'>
+      <div class='sequencePlayers'>
+        <div ng-repeat="player in players" class="mathFaceContainer"
+             ng-class="{'avatarWrongAnswer': !ctrl.playerStatus[player.$id]}">
+          <img src="/app/img/redX.png" class="redX" />
+          <img ng-src="{{player.imageUrl}}" class="face big" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
