@@ -39,7 +39,8 @@
 
       this.switchGame = function() {
         gameDataService.setState(gameDataService.STATES.PLAYING);
-        var newGame = this.games[Math.floor((Math.random() * this.games.length))];
+        //var newGame = this.games[Math.floor((Math.random() * this.games.length))];
+        var newGame = 'math';
         gameDataService.startGame(newGame, this.players);
         this.startGame(newGame);
       };
@@ -131,12 +132,19 @@
 
       this.getMatchingWinners = function(gameData, players, expectedValue) {
         var winners = [];
+        var allAnswered = true;
         players.forEach(function(player) {
-          if(gameData[player.$id] == expectedValue) {
+          if (!gameData[player.$id]) {
+            // player hasn't answered;
+            allAnswered = false;
+          } else if(gameData[player.$id] == expectedValue) {
             winners.push(player);
           }
         });
         if (winners.length == 0) {
+          if (allAnswered) {
+            return [];
+          }
           return null;
         }
         return winners;
