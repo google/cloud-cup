@@ -48,6 +48,87 @@ angular.module('myApp.games', [])
   };
 })
 
+.directive('swipeGame', function($q, $interval, gameRunner, gameDataService, fbutil) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/swipe.html',
+    link: function($scope) {
+      $scope.maxTaps = 100;
+      var interval;
+
+      var movePotato = function() {
+        var rnd;
+        do {
+          rnd = Math.floor((Math.random() * $scope.players.length));
+        } while (rnd == $scope.potatoIndex);
+        $scope.potatoIndex = rnd;
+        console.log('potato index: ' + rnd);
+        var playerId = $scope.players[$scope.potatoIndex].$id;
+        $scope.currentPlayerTap = $scope.gameData[playerId];
+      };
+
+      var gameEnd = function(deferred) {
+        $interval.cancel(interval);
+
+        var best = -1000;
+        var winners = [];
+        for (var i = 0; i < $scope.players.length; i++) {
+          var player = $scope.players[i];
+          console.log(player.name + ': ' + $scope.life[i]);
+          if ($scope.life[i] > best) {
+            best = $scope.life[i];
+            winners = [];
+          }
+          if ($scope.life[i] == best) {
+            winners.push(player);
+          }
+        }
+        console.log('best = ' + best);
+        console.log('winners = ' + winners);
+
+        deferred.resolve(winners);
+      };
+
+      var gameLoop = function(deferred) {
+        $scope.time = $scope.time - 1;
+        var playerId = $scope.players[$scope.potatoIndex].$id;
+
+        // console.log($scope.potatoIndex);
+        // console.log('old: ' + $scope.currentPlayerTap + ' - ' + $scope.gameData[playerId]);
+        if ($scope.currentPlayerTap != $scope.gameData[playerId]) {
+          movePotato();
+          return;
+        }
+
+        $scope.life[$scope.potatoIndex] = $scope.life[$scope.potatoIndex] - 1;
+        if ($scope.life[$scope.potatoIndex] <= 0) { // || $scope.time <= 0) {
+          gameEnd(deferred);
+        }
+      };
+
+      var gameStart = function(deferred) {
+        $scope.time = 40;
+        $scope.life = [];
+        $scope.players.forEach(function(player) {
+          $scope.life.push(80);
+        });
+        $scope.potatoIndex = -1;
+        movePotato();
+        interval = $interval(function() {
+          gameLoop(deferred);
+        }, 100);
+      };
+
+      gameRunner.registerGame('swipe', function() {
+        $scope.gameData = gameDataService.getGameData();
+        var deferred = $q.defer();
+        gameStart(deferred);
+        return deferred.promise;
+      }.bind('this'));
+    }
+  };
+})
+
 // math
 .directive('mathGame', function($q, gameRunner, gameDataService) {
   return {

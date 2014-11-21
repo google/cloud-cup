@@ -1,0 +1,33 @@
+<div>
+  <h1>Slide when you have the potato!</h1>
+
+  <table>
+    <tr>
+      <td ng-repeat="player in players" height="400px">
+        <div style="height: {{life[$index]*4}}px; width: 50px; transition: all 0.1s;
+                    background-color: #f00"></div>
+      </td>
+    </tr>
+    <tr>
+      <td ng-repeat="player in players">
+        <img ng-src="{{player.imageUrl}}" class="face"
+             style="transform: rotate({{life[$index]*10}}deg);
+                    transition: all 0.1s;"/>
+      </td>
+    </tr>
+    <tr>
+      <td ng-repeat="player in players">
+        <b>{{player.name}}</b>
+      </td>
+    </tr>
+    <tr>
+      <td ng-repeat="player in players">
+        <span ng-show="$index == potatoIndex">O</span>
+      </td>
+    </tr>
+  </table>
+
+  <!-- debug -->
+  life: {{life}}<br>
+  time: {{time}}
+</div>
