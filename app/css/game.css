@@ -86,3 +86,15 @@
 .mathWrongAnswer .mathRedX {
   display: block;
 }
+
+.row-players {
+  text-align: center;
+}
+
+.row-players .row-player {
+  display:inline;
+}
+
+.row-player .face.huge {
+  margin: 32px;
+}
