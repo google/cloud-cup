@@ -201,13 +201,56 @@ angular.module('myApp.games', [])
   };
 })
 
+// turn
+.directive('turnGame', function($q, gameRunner, gameDataService) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/turn.html',
+    link: function($scope) {
+      $scope.maxTaps = 5;
+
+      gameRunner.registerGame('turn', function() {
+        $scope.gameData = gameDataService.getGameData();
+        var deferred = $q.defer();
+        $scope.gameData.$watch(function() {
+          var winners = gameRunner.getHighWinners($scope.gameData,
+            $scope.players, $scope.maxTaps);
+          if (winners != null) {
+            deferred.resolve(winners);
+          }
+        });
+        return deferred.promise;
+      });
+    }
+  };
+})
+
 .directive('swipeGame', function($q, $interval, gameRunner, gameDataService, fbutil) {
   return {
     restrict: 'E',
     templateUrl: 'partials/games/swipe.html',
     link: function($scope) {
-      $scope.maxTaps = 100;
       var interval;
+
+      var init = function() {
+        $scope.potatoIndex = -1;
+        $scope.life = [];
+        $scope.players.forEach(function(player) {
+          $scope.life.push(80);
+        });
+      }
+
+      init();
+
+      $scope.color = function(n) {
+        var r = 255 - n*3;
+        var g = 255;
+        if (n <= 60) {
+          g -= (60 - n) * 4;
+        }
+        ret = 'rgb(' + r + ', ' + g + ', 0)';
+        return ret;
+      }
 
       var movePotato = function() {
         var rnd;
@@ -257,11 +300,7 @@ angular.module('myApp.games', [])
           deferred.resolve([]);
           return;
         }
-        $scope.life = [];
-        $scope.players.forEach(function(player) {
-          $scope.life.push(80);
-        });
-        $scope.potatoIndex = -1;
+        init();
         movePotato();
         interval = $interval(function() {
           gameLoop(deferred);
