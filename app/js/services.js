@@ -39,8 +39,7 @@
 
       this.switchGame = function() {
         gameDataService.setState(gameDataService.STATES.PLAYING);
-        //var newGame = this.games[Math.floor((Math.random() * this.games.length))];
-        var newGame = 'math';
+        var newGame = this.games[Math.floor((Math.random() * this.games.length))];
         gameDataService.startGame(newGame, this.players);
         this.startGame(newGame);
       };
