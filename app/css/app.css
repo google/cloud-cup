@@ -43,13 +43,15 @@ a {
   border-radius: 100%;
   border: 1px solid #ddd;
   width: 48px;
-  margin: 32px;
+  margin: 8px;
 }
+
 .face.med {
   width: 75px;
 }
 .face.big {
   width: 96px;
+  margin: 16px;
 }
 .face.huge {
   width: 200px;

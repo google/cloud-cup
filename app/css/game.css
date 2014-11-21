@@ -62,7 +62,8 @@
 }
 
 .mathExpression {
-  font-size: 50px;
+  font-size: 140px;
+  text-align: center;
 }
 
 .mathFaceContainer {
