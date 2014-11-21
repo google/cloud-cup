@@ -17,20 +17,18 @@
     </div>
 
     <div ng-show="countdown >= 30 && winners.length > 0">
-      <h2>Winners</h2>
+      <h2 class="ranking">Winners</h2>
       <div class="winners-container">
-        <div class="winners-list">
-          <div ng-repeat="winner in winners" class="player-name-box">
-            <img ng-src="{{winner.imageUrl}}" class="face big"/>
-            <b>{{winner.name}}</b>
-          </div>
+        <div ng-repeat="winner in winners" class="player-name-box">
+          <img ng-src="{{winner.imageUrl}}" class="face big"/>
+          <b>{{winner.name}}</b>
         </div>
       </div>
     </div>
   </div>
 
   <div>
-    <h2>Ranking</h2>
+    <h2 class="ranking">Ranking</h2>
 
     <table class="ranking card">
       <tr ng-repeat="player in players | orderBy:'-score'" class="rankingPlayer">

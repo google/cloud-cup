@@ -236,11 +236,14 @@ angular.module('myApp.games', [])
     link: function($scope) {
       var interval;
 
+      var maxLife = 120;
+      $scope.maxLife = maxLife;
+
       var init = function() {
         $scope.potatoIndex = -1;
         $scope.life = [];
         $scope.players.forEach(function(player) {
-          $scope.life.push(120);
+          $scope.life.push(maxLife);
         });
       }
 

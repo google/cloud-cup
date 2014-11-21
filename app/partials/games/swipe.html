@@ -1,31 +1,19 @@
 <div>
 
-  <h1>Slide up on your phone when you have the hot potato!</h1>
+  <h1>Slide up when you have the hot potato!</h1>
 
-  <table>
-    <tr>
-      <td ng-repeat="player in players" height="300px">
-        <div style="height: {{life[$index]*2}}px; width: 40px; transition: all 0.1s;
-                    background-color: {{potatoColor(life[$index])}}"></div>
-      </td>
-    </tr>
-    <tr>
-      <td ng-repeat="player in players">
-        <img ng-src="{{player.imageUrl}}" class="face"
-             style="transform: rotate({{life[$index]*15}}deg);
-                    transition: all 0.1s;"/>
-      </td>
-    </tr>
-    <tr>
-      <td ng-repeat="player in players">
-        <b>{{player.name}}</b>
-      </td>
-    </tr>
-    <tr>
-      <td ng-repeat="player in players" style="position: relative">
-        <div ng-show="$index == potatoIndex" class="potato"
-             style="position: absolute; left: -20px"></div>
-      </td>
-    </tr>
-  </table>
+  <div class="swipe-container">
+    <div ng-repeat="player in players" class="player">
+      <div ng-show="$index == potatoIndex" class="potato player-element active"></div>
+      <div ng-hide="$index == potatoIndex" class="potato player-element"></div>
+
+      <img ng-src="{{player.imageUrl}}" class="face player-element {{$index == potatoIndex ? 'jump': ''}}"/>
+      <div style="height: 200px;" class="player-element">
+        <div style="height: {{(life[$index] / maxLife)*200}}px;
+                    background-color: {{potatoColor(life[$index])}}"
+             class="life-bar"></div>
+      </div>
+    </div>
+  </div>
+
 </div>

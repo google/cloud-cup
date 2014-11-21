@@ -163,8 +163,8 @@
 }
 
 .animated {
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     animation-iteration-count:infinite;
@@ -201,9 +201,56 @@
     animation-name: shake2;
 }
 
-.potato {
+.gameContainer .swipe-container {
+  display: flex;
+  justify-content: center;
+}
+
+.gameContainer .swipe-container .player {
+  margin: 32px;
+  width: 50px;
+  height: 300px;
+}
+
+.gameContainer .swipe-container .player .player-element {
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gameContainer .swipe-container .player .player-element .life-bar {
+  width: 100%;
+  transition: all 0.1s;
+  opacity: 0.5;
+}
+
+.gameContainer .swipe-container .player .player-element.potato {
   width: 50px;
   height: 50px;
-  background-color: #DB4437;
   border-radius: 100%;
+}
+
+.gameContainer .swipe-container .player .player-element.potato.active {
+  background-color: #DB4437;
+}
+
+
+@-webkit-keyframes jump {
+    0%, 100% {-webkit-transform: translateY(0);}
+    50% {-webkit-transform: translateY(-20px);}
+}
+
+@keyframes jump {
+0%, 100% {transform: translateY(0);}
+50% {transform: translateY(10px);}
+}
+.jump {
+    -webkit-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-name: jump;
+    animation-name: jump;
 }

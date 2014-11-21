@@ -15,56 +15,50 @@
 .winners-container {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
-.winners-list {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ranking {
+.waitingContainer .ranking {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.ranking table, .ranking tr {
+.waitingContainer .ranking table, .waitingContainer .ranking tr {
   width: 100%;
 }
 
-.ranking .position {
+.waitingContainer .ranking .position {
   padding-left: 32px;
 }
 
-.ranking .avatar {
+.waitingContainer .ranking .avatar {
   padding-left: 16px;
   padding-right: 16px;
 }
 
-.ranking .score {
+.waitingContainer .ranking .score {
   padding-right: 32px;
 }
 
-.ranking {
+.waitingContainer .ranking {
   font-size: 40px;
 }
 
-.ranking .name {
+.waitingContainer .ranking .name {
   font-weight: lighter;
   width: 100%;
 }
 
 
 
-.rankingPlayer.ng-move {
+.waitingContainer .rankingPlayer.ng-move {
   transition: all linear 1s;
   max-height: 0px;
   opacity: 0;
 }
 
-.rankingPlayer.ng-move.ng-move-active {
+.waitingContainer .rankingPlayer.ng-move.ng-move-active {
   max-height: 40px;
   opacity: 1;
 }
