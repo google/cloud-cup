@@ -1,11 +1,12 @@
 <div>
+
   <h1>Slide when you have the potato!</h1>
 
   <table>
     <tr>
-      <td ng-repeat="player in players" height="400px">
-        <div style="height: {{life[$index]*4}}px; width: 50px; transition: all 0.1s;
-                    background-color: #f00"></div>
+      <td ng-repeat="player in players" height="350px">
+        <div style="height: {{life[$index]*4}}px; width: 40px; transition: all 0.1s;
+                    background-color: {{color(life[$index])}}"></div>
       </td>
     </tr>
     <tr>
@@ -21,8 +22,9 @@
       </td>
     </tr>
     <tr>
-      <td ng-repeat="player in players">
-        <span ng-show="$index == potatoIndex">O</span>
+      <td ng-repeat="player in players" style="position: relative">
+        <img ng-show="$index == potatoIndex" src="img/potato.jpg"
+             style="position: absolute; left: -20px">
       </td>
     </tr>
   </table>

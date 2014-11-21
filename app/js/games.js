@@ -78,8 +78,29 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/swipe.html',
     link: function($scope) {
-      $scope.maxTaps = 100;
       var interval;
+
+      var init = function() {
+        $scope.potatoIndex = -1;
+        $scope.life = [];
+        $scope.players.forEach(function(player) {
+          $scope.life.push(80);
+        });
+      }
+
+      init();
+
+      $scope.color = function(n) {
+        console.log(n);
+        var r = 255 - n*3;
+        var g = 255;
+        if (n <= 60) {
+          g -= (60 - n) * 4;
+        }
+        ret = 'rgb(' + r + ', ' + g + ', 0)';
+        console.log(ret);
+        return ret;
+      }
 
       var movePotato = function() {
         var rnd;
@@ -129,11 +150,7 @@ angular.module('myApp.games', [])
           deferred.resolve([]);
           return;
         }
-        $scope.life = [];
-        $scope.players.forEach(function(player) {
-          $scope.life.push(80);
-        });
-        $scope.potatoIndex = -1;
+        init();
         movePotato();
         interval = $interval(function() {
           gameLoop(deferred);
