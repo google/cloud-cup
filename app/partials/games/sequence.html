@@ -6,7 +6,7 @@
       <div class='sequencePlayers'>
         <div ng-repeat="player in players" class="mathFaceContainer"
              ng-class="{'avatarWrongAnswer': !ctrl.playerStatus[player.$id]}">
-          <img src="/app/img/redX.png" class="redX" />
+          <img src="img/redX.png" class="redX" />
           <img ng-src="{{player.imageUrl}}" class="face big" />
         </div>
       </div>
