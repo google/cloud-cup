@@ -150,6 +150,12 @@ angular.module('myApp.games', [])
             operation = '+';
             break;
           case 2: // -
+            if (int1 < int2) {
+              // to avoid negative numbers, switch the values
+              var temp = int1;
+              int1 = int2;
+              int2 = temp;
+            }
             result = int1 - int2;
             operation = '-';
             break;
