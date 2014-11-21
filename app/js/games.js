@@ -5,15 +5,17 @@ angular.module('myApp.games', [])
   return {
     restrict: 'E',
     templateUrl: 'partials/games/tap.html',
-    link: function($scope) {
-      var maxTaps = 20;
-
+    controllerAs: 'tapCtrl',
+    controller: function() {
+      this.maxTaps = 20;
+    },
+    link: function($scope, elem, attr, ctrl) {
       gameRunner.registerGame('tap', function() {
         $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
-            $scope.players, maxTaps);
+            $scope.players, ctrl.maxTaps);
           if (winners != null) {
             deferred.resolve(winners);
           }
@@ -29,15 +31,17 @@ angular.module('myApp.games', [])
   return {
     restrict: 'E',
     templateUrl: 'partials/games/shake.html',
-    link: function($scope) {
-      var maxTaps = 20;
-
+    controllerAs: 'shakeCtrl',
+    controller: function() {
+      this.maxTaps = 20;
+    },
+    link: function($scope, elem, attr, ctrl) {
       gameRunner.registerGame('shake', function() {
         $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
-            $scope.players, maxTaps);
+            $scope.players, ctrl.maxTaps);
           if (winners != null) {
             deferred.resolve(winners);
           }
