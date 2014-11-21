@@ -4,15 +4,15 @@
 
   <table>
     <tr>
-      <td ng-repeat="player in players" height="350px">
-        <div style="height: {{life[$index]*4}}px; width: 40px; transition: all 0.1s;
+      <td ng-repeat="player in players" height="300px">
+        <div style="height: {{life[$index]*2}}px; width: 40px; transition: all 0.1s;
                     background-color: {{potatoColor(life[$index])}}"></div>
       </td>
     </tr>
     <tr>
       <td ng-repeat="player in players">
         <img ng-src="{{player.imageUrl}}" class="face"
-             style="transform: rotate({{life[$index]*10}}deg);
+             style="transform: rotate({{life[$index]*15}}deg);
                     transition: all 0.1s;"/>
       </td>
     </tr>

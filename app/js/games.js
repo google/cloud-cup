@@ -240,12 +240,12 @@ angular.module('myApp.games', [])
         $scope.potatoIndex = -1;
         $scope.life = [];
         $scope.players.forEach(function(player) {
-          $scope.life.push(80);
+          $scope.life.push(120);
         });
       }
 
       $scope.potatoColor = function(n) {
-        var r = 255 - n*3;
+        var r = 255 - n*2;
         var g = 255;
         if (n <= 60) {
           g -= (60 - n) * 4;
