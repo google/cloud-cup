@@ -1,15 +1,9 @@
 <div>
-  <h1>Shake your phone!</h1>
-
-  <table>
-    <tr ng-repeat="player in players">
-      <td>
-        <span class="finishingLine">&nbsp;</span>
+  <h1>Shake your body</h1>
+    <div ng-repeat="player in players" class="player-line-row">
         <img ng-src="{{player.imageUrl}}" class="face"
-             style="margin-left: {{(gameData[player.$id]||0)*20}}px;
-                    transform: rotate({{gameData[player.$id]*15}}deg);
+             style="margin-left: {{(gameData[player.$id] / maxTaps)*100}}%;
+                    transform: rotate({{gameData[player.$id]*60}}deg);
                     transition: all 0.5s;"/>
-      </td>
-    </tr>
-  </table>
+    </div>
 </div>
