@@ -6,14 +6,14 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/tap.html',
     link: function($scope) {
-      $scope.maxTaps = 20;
+      var maxTaps = 20;
 
       gameRunner.registerGame('tap', function() {
         $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
-            $scope.players, $scope.maxTaps);
+            $scope.players, maxTaps);
           if (winners != null) {
             deferred.resolve(winners);
           }
@@ -30,14 +30,14 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/shake.html',
     link: function($scope) {
-      $scope.maxTaps = 20;
+      var maxTaps = 20;
 
       gameRunner.registerGame('shake', function() {
         $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
-            $scope.players, $scope.maxTaps);
+            $scope.players, maxTaps);
           if (winners != null) {
             deferred.resolve(winners);
           }
@@ -348,8 +348,6 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/math.html',
     link: function($scope) {
-      $scope.maxTaps = 20;
-
       // Random number from 1 to maxValue
       function randomNumber(maxValue) {
         return Math.floor(Math.random() * (maxValue - 1) + 1);

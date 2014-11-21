@@ -83,7 +83,7 @@
   position: absolute;
   width: 109px;
   height: 109px;
-  margin: 8px;
+  margin: 26px;
   opacity: 0.7;
 }
 
@@ -91,7 +91,6 @@
   display: block;
 }
 
-<<<<<<< HEAD
 .sequenceGame {
   display: flex;
 }
