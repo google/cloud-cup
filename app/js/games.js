@@ -62,7 +62,6 @@ angular.module('myApp.games', [])
           rnd = Math.floor((Math.random() * $scope.players.length));
         } while (rnd == $scope.potatoIndex);
         $scope.potatoIndex = rnd;
-        console.log('potato index: ' + rnd);
         var playerId = $scope.players[$scope.potatoIndex].$id;
         $scope.currentPlayerTap = $scope.gameData[playerId];
       };
@@ -74,7 +73,6 @@ angular.module('myApp.games', [])
         var winners = [];
         for (var i = 0; i < $scope.players.length; i++) {
           var player = $scope.players[i];
-          console.log(player.name + ': ' + $scope.life[i]);
           if ($scope.life[i] > best) {
             best = $scope.life[i];
             winners = [];
@@ -83,31 +81,29 @@ angular.module('myApp.games', [])
             winners.push(player);
           }
         }
-        console.log('best = ' + best);
-        console.log('winners = ' + winners);
 
         deferred.resolve(winners);
       };
 
       var gameLoop = function(deferred) {
-        $scope.time = $scope.time - 1;
         var playerId = $scope.players[$scope.potatoIndex].$id;
 
-        // console.log($scope.potatoIndex);
-        // console.log('old: ' + $scope.currentPlayerTap + ' - ' + $scope.gameData[playerId]);
         if ($scope.currentPlayerTap != $scope.gameData[playerId]) {
           movePotato();
           return;
         }
 
         $scope.life[$scope.potatoIndex] = $scope.life[$scope.potatoIndex] - 1;
-        if ($scope.life[$scope.potatoIndex] <= 0) { // || $scope.time <= 0) {
+        if ($scope.life[$scope.potatoIndex] <= 0) {
           gameEnd(deferred);
         }
       };
 
       var gameStart = function(deferred) {
-        $scope.time = 40;
+        if ($scope.players.length < 2) {  // We need at least 2 players.
+          deferred.resolve([]);
+          return;
+        }
         $scope.life = [];
         $scope.players.forEach(function(player) {
           $scope.life.push(80);
