@@ -240,9 +240,7 @@ angular.module('myApp.games', [])
         });
       }
 
-      init();
-
-      $scope.color = function(n) {
+      $scope.potatoColor = function(n) {
         var r = 255 - n*3;
         var g = 255;
         if (n <= 60) {
@@ -252,14 +250,22 @@ angular.module('myApp.games', [])
         return ret;
       }
 
+      var getCurrentTaps = function() {
+        $scope.currentPlayerTap = [];
+        $scope.players.forEach(function (player) {
+          $scope.currentPlayerTap.push($scope.gameData[player.$id]);
+        });
+      }
+
+      init();
+
       var movePotato = function() {
         var rnd;
         do {
           rnd = Math.floor((Math.random() * $scope.players.length));
         } while (rnd == $scope.potatoIndex);
         $scope.potatoIndex = rnd;
-        var playerId = $scope.players[$scope.potatoIndex].$id;
-        $scope.currentPlayerTap = $scope.gameData[playerId];
+        getCurrentTaps();
       };
 
       var gameEnd = function(deferred) {
@@ -284,11 +290,30 @@ angular.module('myApp.games', [])
       var gameLoop = function(deferred) {
         var playerId = $scope.players[$scope.potatoIndex].$id;
 
-        if ($scope.currentPlayerTap != $scope.gameData[playerId]) {
+        if (typeof $scope.currentPlayerTap[0] == 'undefined') {
+          getCurrentTaps();
+          return;
+        }
+
+        for (var i = 0; i < $scope.players.length; i++) {
+          var id = $scope.players[i].$id;
+          if (id == playerId) {
+            continue;
+          }
+          if ($scope.gameData[id] != $scope.currentPlayerTap[i]) {
+            $scope.life[i] = $scope.life[i] - 20;
+            if ($scope.life[i] < 0) {
+              gameEnd(deferred);
+            }
+          }
+        }
+
+        if ($scope.currentPlayerTap[$scope.potatoIndex] != $scope.gameData[playerId]) {
           movePotato();
           return;
         }
 
+        getCurrentTaps();
         $scope.life[$scope.potatoIndex] = $scope.life[$scope.potatoIndex] - 1;
         if ($scope.life[$scope.potatoIndex] <= 0) {
           gameEnd(deferred);
