@@ -64,7 +64,7 @@
         }
         $rootScope.winners = winners;
 
-        var count = 60;
+        var count = 50;
         // Store the room so we don't update the wrong game.
         var room = this.currentRoom;
         var waitInterval = $interval(function() {
