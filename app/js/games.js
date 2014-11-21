@@ -207,14 +207,14 @@ angular.module('myApp.games', [])
     restrict: 'E',
     templateUrl: 'partials/games/turn.html',
     link: function($scope) {
-      $scope.maxTaps = 5;
+      $scope.maxHalfTurns = 8;
 
       gameRunner.registerGame('turn', function() {
         $scope.gameData = gameDataService.getGameData();
         var deferred = $q.defer();
         $scope.gameData.$watch(function() {
           var winners = gameRunner.getHighWinners($scope.gameData,
-            $scope.players, $scope.maxTaps);
+            $scope.players, $scope.maxHalfTurns);
           if (winners != null) {
             deferred.resolve(winners);
           }

@@ -91,6 +91,7 @@
   display: block;
 }
 
+<<<<<<< HEAD
 .sequenceGame {
   display: flex;
 }
@@ -123,4 +124,16 @@
 
 .googleYellow {
   background-color: #F4B400;
+}
+
+.row-players {
+  text-align: center;
+}
+
+.row-players .row-player {
+  display:inline;
+}
+
+.row-player .face.huge {
+  margin: 32px;
 }
