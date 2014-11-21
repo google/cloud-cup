@@ -3,8 +3,8 @@
 
   <div class='mathExpression'>{{expression}}</div>
   <div class='faceRow'>
-    <div ng-repeat="player in players" class="mathFaceContainer {{getStyle(player)}}">
-      <img src="img/redX.png" class="mathRedX" />
+    <div ng-repeat="player in players" class="mathFaceContainer {{getPlayerStyle(player)}}">
+      <img src="img/redX.png" class="redX" />
       <img ng-src="{{player.imageUrl}}" class="face big" />
     </div>
   </div>
