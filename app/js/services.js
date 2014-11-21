@@ -5,23 +5,32 @@
 
    angular.module('myApp.services', [])
 
-    .service('gameRunner', function($rootScope, $location, $interval, gameDataService, playersService) {
+    .service('gameRunner', function($rootScope, $location, $interval, $timeout, gameDataService, playersService) {
       // map of game ID to start function that returns a promise
       // which resolves to a list of winners when the game is over
       this.startFunctions = {};
       this.games = [];
-      this.MAX_GAMES = 10;
+      this.NUMBER_OF_GAMES = 6;
       this.currentRoom = null;
       this.players = {};
+      this.gameOrder = [];
+
+      //@ http://jsfromhell.com/array/shuffle [v1.0]
+      var shuffle = function(o) { //v1.0
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+      }
 
       $rootScope.$watch(function() {
         // Watch for scope.code to change, but only start when there
         // are registered games.
         return $location.search().code && this.games.length > 0;
       }.bind(this), function() {
-        if (this.games.length > 0) {
+        $timeout(function () {
+          this.gameOrder = shuffle(this.games.concat(this.games));
           this.startNewGame($location.search().code);
-        }
+
+        }.bind(this), 100);
       }.bind(this));
 
       this.registerGame = function(gameId, startFunction) {
@@ -39,7 +48,7 @@
 
       this.switchGame = function() {
         gameDataService.setState(gameDataService.STATES.PLAYING);
-        var newGame = this.games[Math.floor((Math.random() * this.games.length))];
+        var newGame = this.gameOrder[this.getNextGameNumber()];
         gameDataService.startGame(newGame, this.players);
         this.startGame(newGame);
       };
@@ -55,7 +64,7 @@
 
       this.waitingScreen = function(winners) {
         var end;
-        if (gameDataService.getNumber() >= this.MAX_GAMES) {
+        if (this.getNextGameNumber() >= this.gameOrder.length) {
           gameDataService.setState(gameDataService.STATES.DONE);
           end = true;
         } else {
