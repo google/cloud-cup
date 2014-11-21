@@ -1,0 +1,14 @@
+<div>
+  <h1>Turn around</h1>
+  <table>
+    <tr ng-repeat="player in players">
+      <td>
+        <span class="finishingLine">&nbsp;</span>
+        <img ng-src="{{player.imageUrl}}" class="face"
+             style="margin-left: {{(gameData[player.$id]||0)*20}}px;
+                    transform: rotate({{gameData[player.$id]*15}}deg);
+                    transition: all 0.5s;"/>
+      </td>
+    </tr>
+  </table>
+</div>

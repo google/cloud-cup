@@ -48,6 +48,31 @@ angular.module('myApp.games', [])
   };
 })
 
+
+// turn
+.directive('turnGame', function($q, gameRunner, gameDataService) {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/games/turn.html',
+    link: function($scope) {
+      $scope.maxTaps = 5;
+
+      gameRunner.registerGame('turn', function() {
+        $scope.gameData = gameDataService.getGameData();
+        var deferred = $q.defer();
+        $scope.gameData.$watch(function() {
+          var winners = gameRunner.getHighWinners($scope.gameData,
+            $scope.players, $scope.maxTaps);
+          if (winners != null) {
+            deferred.resolve(winners);
+          }
+        });
+        return deferred.promise;
+      });
+    }
+  };
+})
+
 .directive('swipeGame', function($q, $interval, gameRunner, gameDataService, fbutil) {
   return {
     restrict: 'E',
