@@ -19,18 +19,15 @@
       var shuffle = function(o) { //v1.0
         for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
         return o;
-      }
+      };
 
       $rootScope.$watch(function() {
         // Watch for scope.code to change, but only start when there
         // are registered games.
-        return $location.search().code && this.games.length > 0;
+        return $location.search().code && this.games.length >= this.NUMBER_OF_GAMES;
       }.bind(this), function() {
-        $timeout(function () {
-          this.gameOrder = shuffle(this.games.concat(this.games));
-          this.startNewGame($location.search().code);
-
-        }.bind(this), 100);
+        this.gameOrder = shuffle(this.games.concat(this.games));
+        this.startNewGame($location.search().code);
       }.bind(this));
 
       this.registerGame = function(gameId, startFunction) {
