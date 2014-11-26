@@ -96,6 +96,7 @@ angular.module('myApp.games', [])
       };
 
       this.run = function() {
+        var timeout = 1000 - 100 * Math.floor(this.index/5);
         // TODO get faster as game progresses
         this.currentTimeout = $timeout(function() {
           this.color = this.sequence[this.index];
@@ -103,7 +104,7 @@ angular.module('myApp.games', [])
           if (!this.checkForWinners()) {
             this.run();
           }
-        }.bind(this), 1000);
+        }.bind(this), timeout);
       };
 
       this.getStyle = function(color) {
