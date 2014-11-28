@@ -35,8 +35,9 @@ angular.module('myApp.controllers', ['firebase.utils'])
         }
 
         // Register the room.
-        // TODO: There could be a race condition though.
+        // TODO: There could be a race condition. Use Firebase.transaction().
         var obj = {};
+        // TODO: Use the timestamp as priority, and use that to remove old rooms.
         obj[roomId] = true;
         fbutil.ref('room/' + roomId).remove(); // make sure the state is clean
         fbutil.ref('rooms').update(obj);
