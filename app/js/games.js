@@ -254,7 +254,7 @@ angular.module('myApp.games', [])
           seq.push(i);
         }
         var res = [];
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 100; i++) {
           res.push.apply(res, shuffle(seq));
         }
         return res;
