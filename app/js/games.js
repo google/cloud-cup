@@ -237,8 +237,28 @@ angular.module('myApp.games', [])
     link: function($scope) {
       var interval;
 
-      var maxLife = 120;
+      var maxLife = 80;
       $scope.maxLife = maxLife;
+      $scope.turnNumber = -1;
+      $scope.turnSequence = [];
+
+      //@ http://jsfromhell.com/array/shuffle [v1.0]
+      var shuffle = function(o) { //v1.0
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+      };
+
+      var sequence = function() {
+        var seq = [];
+        for (var i = 0; i < $scope.players.length; i++) {
+          seq.push(i);
+        }
+        var res = [];
+        for (var i = 0; i < 5; i++) {
+          res.push.apply(res, shuffle(seq));
+        }
+        return res;
+      }
 
       var init = function() {
         $scope.potatoIndex = -1;
@@ -246,6 +266,8 @@ angular.module('myApp.games', [])
         $scope.players.forEach(function(player) {
           $scope.life.push(maxLife);
         });
+        $scope.turnNumber = -1;
+        $scope.turnSequence = sequence();
       }
 
       $scope.potatoColor = function(n) {
@@ -268,11 +290,12 @@ angular.module('myApp.games', [])
       init();
 
       var movePotato = function() {
-        var rnd;
+        var choice;
         do {
-          rnd = Math.floor((Math.random() * $scope.players.length));
-        } while (rnd == $scope.potatoIndex);
-        $scope.potatoIndex = rnd;
+          $scope.turnNumber = $scope.turnNumber + 1;
+          choice = $scope.turnSequence[$scope.turnNumber];
+        } while (choice == $scope.potatoIndex);
+        $scope.potatoIndex = choice;
         getCurrentTaps();
       };
 
@@ -310,7 +333,7 @@ angular.module('myApp.games', [])
           }
           if ($scope.gameData[id] != $scope.currentPlayerTap[i]) {
             $scope.life[i] = $scope.life[i] - 20;
-            if ($scope.life[i] < 0) {
+            if ($scope.life[i] <= 0) {
               gameEnd(deferred);
             }
           }
