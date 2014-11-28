@@ -46,7 +46,7 @@
       };
 
       this.startNewGame = function(roomId) {
-        this.gameOrder = shuffle(this.gamesList.concat(this.gamesList));
+        this.gameOrder = shuffle(this.gamesList/*.concat(this.gamesList)*/);
         this.currentRoom = roomId;
         this.players = playersService.asObject(roomId);
         this.playersList = playersService.asArray(roomId);
