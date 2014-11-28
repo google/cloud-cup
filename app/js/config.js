@@ -8,7 +8,7 @@ angular.module('myApp.config', [])
   .constant('version', '0.8.2')
 
   // your Firebase data URL goes here, no trailing slash
-  .constant('FBURL', 'https://cloud-olympics.firebaseio.com')
+  .constant('FBURL', 'https://cloud-cup.firebaseio.com')
 
   // double check that the app has been configured before running it and blowing up space and time
   .run(['FBURL', '$timeout', function(FBURL, $timeout) {
