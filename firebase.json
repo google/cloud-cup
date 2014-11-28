@@ -1,5 +1,5 @@
 {
-  "firebase": "cloud-olympics",
+  "firebase": "cloud-cup",
   "public": "app",
   "ignore": [
     "firebase.json",
