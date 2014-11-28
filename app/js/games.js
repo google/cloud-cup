@@ -96,7 +96,7 @@ angular.module('myApp.games', [])
       };
 
       this.run = function() {
-        var timeout = 1000 - 100 * Math.floor(this.index/5);
+        var timeout = 1000 - 100 * Math.floor(this.index/2);
         // TODO get faster as game progresses
         this.currentTimeout = $timeout(function() {
           this.color = this.sequence[this.index];

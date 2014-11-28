@@ -9,11 +9,20 @@
       // map of game ID to start function that returns a promise
       // which resolves to a list of winners when the game is over
       this.startFunctions = {};
+      this.gamesList = [];
       this.games = [];
       this.NUMBER_OF_GAMES = 6;
       this.currentRoom = null;
       this.players = {};
+      this.playersList = [];
       this.gameOrder = [];
+
+      $rootScope.$watch(gameDataService.isRestarted.bind(gameDataService), function(isRestarted) {
+        if (isRestarted) {
+          this.resetScores();
+          this.startNewGame($location.search().code);
+        }
+      }.bind(this));
 
       //@ http://jsfromhell.com/array/shuffle [v1.0]
       var shuffle = function(o) { //v1.0
@@ -26,19 +35,21 @@
         // are registered games.
         return $location.search().code && this.games.length >= this.NUMBER_OF_GAMES;
       }.bind(this), function() {
-        this.gameOrder = shuffle(this.games.concat(this.games));
         this.startNewGame($location.search().code);
       }.bind(this));
 
       this.registerGame = function(gameId, startFunction) {
         this.startFunctions[gameId] = startFunction;
-        // TODO separate list not necessary
+        // TODO separate lists not necessary
+        this.gamesList.push(gameId);
         this.games.push(gameId);
       };
 
       this.startNewGame = function(roomId) {
+        this.gameOrder = shuffle(this.gamesList.concat(this.gamesList));
         this.currentRoom = roomId;
         this.players = playersService.asObject(roomId);
+        this.playersList = playersService.asArray(roomId);
         gameDataService.setNumber(-1);
         this.waitingScreen([]);
       };
@@ -103,6 +114,13 @@
         this.players.$save();
       };
 
+      this.resetScores = function() {
+        this.playersList.forEach(function(player) {
+          this.players[player.$id].score = 0;
+        }.bind(this));
+        this.players.$save();
+      };
+
       this.getNextGameNumber = function() {
         return (gameDataService.getNumber() || 0) + 1;
       };
@@ -153,7 +171,7 @@
           return null;
         }
         return winners;
-      }
+      };
     })
 
     .service('playersService', function(fbutil) {
@@ -175,6 +193,7 @@
 
       this.STATES = {
         NOT_STARTED: 'not-started',
+        RESTARTED: 'restarted',
         WAITING: 'waiting',
         PLAYING: 'playing',
         DONE: 'done'
@@ -243,6 +262,10 @@
 
       this.isWaiting = function() {
         return this.getState() == this.STATES.WAITING;
+      };
+
+      this.isRestarted = function() {
+        return this.getState() == this.STATES.RESTARTED;
       };
 
       this.isPlaying = function() {
