@@ -2,7 +2,9 @@
 
 This repository contains the source code of the main screen of the Cloud Cup game. 
 
-It is a web application, built using AngularJS and relying on Firebase. It has been boostrapped using the [angular-seed](https://github.com/angular/angularfire-seed) project
+It is a web application, built using AngularJS and relying on Firebase. It has been boostrapped using the [angular-seed](https://github.com/angular/angularfire-seed) project.
+
+This is not an official Google product (experimental or otherwise), it is just code that happens to be owned by Google.
 
 ## How to run
 
@@ -46,43 +48,5 @@ npm start
 ```
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
-
-## Directory Layout
-
-    app/                  --> all of the files to be used in production
-      css/                --> css files
-        app.css           --> default stylesheet
-      img/                --> image files
-      index.html          --> app layout file (the main html template file of the app)
-      index-async.html    --> just like index.html, but loads js files asynchronously
-      js/                 --> javascript files
-        app.js            --> application
-        config.js         --> where you configure Firebase and auth options
-        controllers.js    --> application controllers
-        directives.js     --> application directives
-        decorators.js     --> decorator functions
-        filters.js        --> custom angular filters
-        firebase.utils.js --> some DRY methods for interacting with Firebase and AngularFire
-        routes.js         --> routing and route security for the app
-        services.js       --> custom angular services
-        simpleLogin.js    --> some DRY methods for interacting with `$firebaseSimpleLogin`
-      partials/           --> angular view partials (partial html templates)
-        account.html
-        chat.html
-        home.html
-        login.html
-
-    test/                   --> test config and source files
-      protractor-conf.js    --> config file for running e2e tests with Protractor
-      e2e/                  --> end-to-end specs
-        scenarios.js
-      karma.conf.js         --> config file for running unit tests with Karma
-      unit/                 --> unit level specs/tests
-        configSpec.js       --> specs for config
-        controllersSpec.js  --> specs for controllers
-        directivesSpec.js   --> specs for directives
-        filtersSpec.js      --> specs for filters
-        servicesSpec.js     --> specs for services
-
 
 
