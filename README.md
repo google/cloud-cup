@@ -1,6 +1,6 @@
 # Cloud Cup Main screen
 
-This repository contains the source code of the main screen of the Cloud Cup game. 
+This repository contains the source code of the main screen of the Cloud Cup game.
 
 It is a web application, built using AngularJS and relying on Firebase. It has been boostrapped using the [angular-seed](https://github.com/angular/angularfire-seed) project.
 
@@ -49,4 +49,6 @@ npm start
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
 
+### Deploying the application to Firebase Hosting
 
+Simply type `firebase deploy`
