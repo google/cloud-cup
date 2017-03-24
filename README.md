@@ -1,3 +1,5 @@
+**Warning**: This project is unmaintained and uses a deprecated SDK. You should use the new [Firebase web SDK](https://firebase.google.com/docs/web/setup) for your project.
+
 # Cloud Cup Main screen
 
 This repository contains the source code of the main screen of the Cloud Cup game.
